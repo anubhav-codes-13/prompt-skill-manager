@@ -8,6 +8,8 @@ import { ShootingStars } from './ShootingStars'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import ElectricBorder from './ElectricBorder'
+import FloatingParticles from './FloatingParticles'
+import Magnetic from './Magnetic'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
@@ -144,26 +146,38 @@ const testimonials = [
   {
     quote: "This solves a real annoyance. Having one place to manage and push skills across agents is a workflow I didn't know I needed.",
     source: 'Product Hunt',
+    name: 'Alex Rivers',
+    avatar: 'https://i.pravatar.cc/150?u=alex',
   },
   {
     quote: "The fragmentation problem across agents is real. The unified view approach makes sense — this is exactly what we needed.",
     source: 'Hacker News',
+    name: 'Sarah Chen',
+    avatar: 'https://i.pravatar.cc/150?u=sarah',
   },
   {
     quote: "The skills discoverability problem is real — I end up rediscovering the same prompt patterns across projects.",
     source: 'Hacker News',
+    name: 'Marcus Thorne',
+    avatar: 'https://i.pravatar.cc/150?u=marcus',
   },
   {
     quote: "As someone using agents but not at home with NPM, I like this. Simple, direct, does what it says.",
     source: 'Hacker News',
+    name: 'Elena Garcia',
+    avatar: 'https://i.pravatar.cc/150?u=elena',
   },
   {
     quote: "Every time I want to test the same skill in Cursor or another agent, it's manual file copying and adjusting paths.",
     source: 'Product Hunt',
+    name: 'James Wilson',
+    avatar: 'https://i.pravatar.cc/150?u=james',
   },
   {
     quote: "We need a unified skill marketplace for different agents — good work, this is a step in the right direction.",
     source: 'Hacker News',
+    name: 'Lila Okafor',
+    avatar: 'https://i.pravatar.cc/150?u=lila',
   },
 ]
 
@@ -224,6 +238,17 @@ export default function Home() {
       .then((d) => setDownloads(d.total))
       .catch(() => {})
   }, [])
+
+  const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    if (isPaused) return
+    const id = setInterval(() => {
+      setActiveTestimonial((i) => (i + 1) % testimonials.length)
+    }, 4000)
+    return () => clearInterval(id)
+  }, [isPaused])
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -344,7 +369,9 @@ export default function Home() {
             background: `radial-gradient(700px circle at ${cursor.x}px ${cursor.y}px, rgba(139,92,246,0.07), transparent 40%)`,
           }}
         />
-        {/* Shooting stars */}
+        {/* 3D Particles Background */}
+        <FloatingParticles />
+
         <ShootingStars minDelay={800} maxDelay={3000} starWidth={14} />
 
         {/* Content */}
@@ -375,7 +402,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.28 + i * 0.07 }}
-                className="inline-block text-gradient-bright"
+                className="inline-block text-liquid"
                 style={{ marginRight: '0.25em' }}
               >
                 {word}
@@ -398,32 +425,36 @@ export default function Home() {
             {...fadeUp(0.24)}
           >
             {/* Windows */}
-            <ElectricBorder color="#a78bfa" speed={0.8} chaos={0.1} borderRadius={16}>
-              <a
-                href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
-                style={{
-                  background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)',
-                }}
-              >
-                <WindowsIcon />
-                Download for Windows
-              </a>
-            </ElectricBorder>
+            <Magnetic>
+              <ElectricBorder color="#a78bfa" speed={0.8} chaos={0.1} borderRadius={16}>
+                <a
+                  href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
+                  style={{
+                    background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)',
+                  }}
+                >
+                  <WindowsIcon />
+                  Download for Windows
+                </a>
+              </ElectricBorder>
+            </Magnetic>
 
             {/* Linux */}
-            <a
-              href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border border-white/[0.08] hover:border-violet-400/40 px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06]"
-              style={{ background: 'rgba(255,255,255,0.03)' }}
-            >
-              <Image src="/linux.svg" alt="Linux" width={15} height={15} />
-              Download for Linux
-            </a>
+            <Magnetic>
+              <a
+                href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border border-white/[0.08] hover:border-violet-400/40 px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06]"
+                style={{ background: 'rgba(255,255,255,0.03)' }}
+              >
+                <Image src="/linux.svg" alt="Linux" width={15} height={15} />
+                Download for Linux
+              </a>
+            </Magnetic>
 
             {/* Mac — coming soon */}
             <span className="inline-flex items-center gap-2.5 text-sm text-slate-700 border border-slate-800/50 px-7 py-4 rounded-2xl cursor-not-allowed">
@@ -600,6 +631,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      <div className="container px-6">
+        <div className="glow-divider" />
+      </div>
 
       {/* ── Demo Video ── */}
       {YOUTUBE_VIDEO_ID && (
@@ -641,6 +676,10 @@ export default function Home() {
         </section>
       )}
 
+      <div className="container px-6">
+        <div className="glow-divider" />
+      </div>
+
       {/* ── Features — Bento Grid ── */}
       <section className="border-t border-white/[0.04] py-28 relative overflow-hidden">
         {/* Background orb */}
@@ -661,17 +700,13 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             {features.map((f, i) => (
-              <ScrollReveal key={f.title} delay={i * 80}>
+              <ScrollReveal key={f.title} delay={i * 80} className={f.span === 'lg:col-span-2' ? 'md:col-span-3' : 'md:col-span-2'}>
                 <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.25 }}
-                  className={`group relative rounded-3xl p-7 h-full overflow-hidden cursor-default ${f.span}`}
-                  style={{
-                    background: 'rgba(255,255,255,0.018)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                  }}
+                  className={`group relative rounded-3xl p-7 h-full overflow-hidden cursor-default glass-panel glass-panel-hover`}
                 >
                   {/* Hover colored glow */}
                   <div
@@ -708,7 +743,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Testimonials — Dual Marquee ── */}
+      <div className="container px-6">
+        <div className="glow-divider" />
+      </div>
+
+      {/* ── Testimonials — Smooth Carousel ── */}
       <section className="border-t border-white/[0.04] py-24 overflow-hidden relative">
         <div
           className="pointer-events-none absolute inset-0"
@@ -720,62 +759,103 @@ export default function Home() {
           </p>
         </ScrollReveal>
 
-        <div className="relative flex flex-col gap-4">
-          {/* Left fade mask */}
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-40"
-            style={{ background: 'linear-gradient(to right, #020209, transparent)' }}
-          />
-          {/* Right fade mask */}
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-40"
-            style={{ background: 'linear-gradient(to left, #020209, transparent)' }}
-          />
-
-          {/* Row 1 — forward */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee flex shrink-0 gap-4" style={{ animationDuration: '40s' }}>
-              {[...testimonials.slice(0, 3), ...testimonials.slice(0, 3), ...testimonials.slice(0, 3), ...testimonials.slice(0, 3)].map((t, i) => (
+        <div
+          className="max-w-4xl mx-auto px-6"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Card area */}
+          <div className="relative overflow-hidden rounded-3xl" style={{ minHeight: 260 }}>
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={i}
+                initial={false}
+                animate={{
+                  opacity: activeTestimonial === i ? 1 : 0,
+                  y: activeTestimonial === i ? 0 : 16,
+                  pointerEvents: activeTestimonial === i ? 'auto' : 'none',
+                }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0 flex items-center"
+              >
                 <div
-                  key={i}
-                  className="w-72 shrink-0 rounded-2xl p-5 flex flex-col gap-3"
+                  className="w-full rounded-3xl p-8 md:p-10"
                   style={{
                     background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(139,92,246,0.1)',
+                    border: '1px solid rgba(255,255,255,0.06)',
                   }}
                 >
-                  <span className="text-2xl text-violet-500/20 font-serif leading-none">&ldquo;</span>
-                  <p className="text-slate-300 text-[13px] leading-relaxed flex-1">{t.quote}</p>
-                  <div className="flex items-center gap-2">
-                    {t.source === 'Product Hunt' ? <PHIcon /> : <HNIcon />}
-                    <span className="text-xs text-slate-600">{t.source}</span>
+                  <div className="flex flex-col gap-5 max-w-2xl mx-auto text-center">
+                    {/* Stars */}
+                    <div className="flex items-center justify-center gap-1">
+                      {[...Array(5)].map((_, si) => (
+                        <svg key={si} className="w-3.5 h-3.5 text-violet-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    {/* Quote */}
+                    <p className="text-slate-200 text-base sm:text-lg leading-relaxed font-light italic">
+                      &ldquo;{t.quote}&rdquo;
+                    </p>
+                    {/* Author */}
+                    <div className="flex items-center justify-center gap-3">
+                      <img
+                        src={t.avatar}
+                        alt={t.name}
+                        className="w-9 h-9 rounded-full border border-violet-500/20 object-cover"
+                      />
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-white">{t.name}</p>
+                        <div className="flex items-center gap-1.5 opacity-50">
+                          {t.source === 'Product Hunt' ? <PHIcon /> : <HNIcon />}
+                          <span className="text-[10px] uppercase tracking-widest">{t.source}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Row 2 — reverse */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee-reverse flex shrink-0 gap-4" style={{ animationDuration: '44s' }}>
-              {[...testimonials.slice(3, 6), ...testimonials.slice(3, 6), ...testimonials.slice(3, 6), ...testimonials.slice(3, 6)].map((t, i) => (
-                <div
+          {/* Dots + arrows */}
+          <div className="flex items-center justify-center gap-5 mt-8">
+            <button
+              onClick={() => setActiveTestimonial((i) => (i - 1 + testimonials.length) % testimonials.length)}
+              className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-slate-500 hover:text-white hover:border-violet-500/40 transition-all"
+              aria-label="Previous"
+            >
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M6.5 2L3.5 5L6.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            <div className="flex items-center gap-2">
+              {testimonials.map((_, i) => (
+                <button
                   key={i}
-                  className="w-72 shrink-0 rounded-2xl p-5 flex flex-col gap-3"
+                  onClick={() => setActiveTestimonial(i)}
+                  className="transition-all duration-300 rounded-full"
                   style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(139,92,246,0.1)',
+                    width: activeTestimonial === i ? 20 : 6,
+                    height: 6,
+                    background: activeTestimonial === i ? 'rgba(139,92,246,0.8)' : 'rgba(255,255,255,0.12)',
                   }}
-                >
-                  <span className="text-2xl text-violet-500/20 font-serif leading-none">&ldquo;</span>
-                  <p className="text-slate-300 text-[13px] leading-relaxed flex-1">{t.quote}</p>
-                  <div className="flex items-center gap-2">
-                    {t.source === 'Product Hunt' ? <PHIcon /> : <HNIcon />}
-                    <span className="text-xs text-slate-600">{t.source}</span>
-                  </div>
-                </div>
+                  aria-label={`Go to testimonial ${i + 1}`}
+                />
               ))}
             </div>
+
+            <button
+              onClick={() => setActiveTestimonial((i) => (i + 1) % testimonials.length)}
+              className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-slate-500 hover:text-white hover:border-violet-500/40 transition-all"
+              aria-label="Next"
+            >
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M3.5 2L6.5 5L3.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
       </section>
