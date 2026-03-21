@@ -1,70 +1,69 @@
 'use client'
 
-import { useRef, useMemo, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
-
-function Particles({ count = 1500 }) {
-  const points = useRef<THREE.Points>(null!)
-  
-  // Use useMemo to avoid recalculating on every render
-  const particles = useMemo(() => {
-    const temp = []
-    for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 10
-      const y = (Math.random() - 0.5) * 10
-      const z = (Math.random() - 0.5) * 10
-      temp.push(x, y, z)
-    }
-    return new Float32Array(temp)
-  }, [count])
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime()
-    // Slow rotation
-    points.current.rotation.y = time * 0.05
-    points.current.rotation.x = time * 0.03
-    
-    // Pulse effect
-    const s = 1 + Math.sin(time * 0.5) * 0.05
-    points.current.scale.set(s, s, s)
-  })
-
-  return (
-    <points ref={points}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particles.length / 3}
-          array={particles}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.012}
-        color="#a78bfa"
-        transparent
-        opacity={0.4}
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  )
-}
+import { useEffect, useRef } from 'react'
 
 export default function FloatingParticles() {
-  const [isMobile, setIsMobile] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    let animId: number
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+
+    const resize = () => {
+      canvas.width = window.innerWidth * dpr
+      canvas.height = window.innerHeight * dpr
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      ctx.scale(dpr, dpr)
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const count = window.innerWidth < 768 ? 50 : 120
+    const dots = Array.from({ length: count }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      o: Math.random() * 0.5 + 0.1,
+    }))
+
+    const draw = () => {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      ctx.clearRect(0, 0, w, h)
+      for (const d of dots) {
+        ctx.beginPath()
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(167,139,250,${d.o})`
+        ctx.fill()
+        d.x += d.vx
+        d.y += d.vy
+        if (d.x < 0) d.x = w
+        if (d.x > w) d.x = 0
+        if (d.y < 0) d.y = h
+        if (d.y > h) d.y = 0
+      }
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', resize)
+    }
   }, [])
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <Particles count={isMobile ? 600 : 1500} />
-      </Canvas>
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40"
+    />
   )
 }
