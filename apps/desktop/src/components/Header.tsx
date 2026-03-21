@@ -17,8 +17,8 @@ interface HeaderProps {
   filterStatus: 'all' | 'enabled' | 'disabled'
   onFilterStatus: (s: 'all' | 'enabled' | 'disabled') => void
   tools: ToolSummary[]
-  view: 'skills' | 'discover'
-  onViewChange: (v: 'skills' | 'discover') => void
+  view: 'skills' | 'discover' | 'prompts'
+  onViewChange: (v: 'skills' | 'discover' | 'prompts') => void
 }
 
 export default function Header({
@@ -29,6 +29,7 @@ export default function Header({
   tools,
   view, onViewChange,
 }: HeaderProps) {
+  const isSkills = view === 'skills'
   return (
     <header className="flex-shrink-0 border-b border-zinc-900 bg-[#0a0a0c]">
       <div className="flex items-center gap-2.5 px-4 h-12">
@@ -42,7 +43,7 @@ export default function Header({
 
         {/* View toggle */}
         <div className="flex items-center bg-zinc-900/70 border border-zinc-800/80 rounded-lg p-0.5 flex-shrink-0">
-          {(['skills', 'discover'] as const).map((v) => (
+          {(['skills', 'discover', 'prompts'] as const).map((v) => (
             <button
               key={v}
               onClick={() => onViewChange(v)}
@@ -52,7 +53,7 @@ export default function Header({
                   : 'text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              {v === 'discover' ? '✦ Discover' : v}
+              {v === 'discover' ? '✦ Discover' : v === 'prompts' ? '✎ Prompts' : v}
             </button>
           ))}
         </div>
@@ -60,7 +61,7 @@ export default function Header({
         <div className="w-px h-3.5 bg-zinc-800 flex-shrink-0" />
 
         {/* Search — skills only */}
-        {view === 'skills' && (
+        {isSkills && (
           <div className="relative flex-1 max-w-56">
             <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600 pointer-events-none" viewBox="0 0 16 16" fill="none">
               <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -77,7 +78,7 @@ export default function Header({
         )}
 
         {/* Tool filter — skills only */}
-        {view === 'skills' && (
+        {isSkills && (
           <select
             value={filterTool}
             onChange={(e) => onFilterTool(e.target.value)}
@@ -91,7 +92,7 @@ export default function Header({
         )}
 
         {/* Status filter — skills only */}
-        {view === 'skills' && (
+        {isSkills && (
           <div className="flex items-center bg-zinc-900/70 border border-zinc-800/80 rounded-lg p-0.5">
             {(['all', 'enabled', 'disabled'] as const).map((s) => (
               <button

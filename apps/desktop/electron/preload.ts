@@ -1,5 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
+contextBridge.exposeInMainWorld('promptsAPI', {
+  load: () => ipcRenderer.invoke('prompts:load'),
+  save: (data: unknown) => ipcRenderer.invoke('prompts:save', data),
+})
+
 contextBridge.exposeInMainWorld('skillsAPI', {
   scanAll: () => ipcRenderer.invoke('skills:scanAll'),
   getReadme: (skillPath: string) => ipcRenderer.invoke('skills:getReadme', skillPath),

@@ -35,8 +35,34 @@ export interface DiscoverResult {
   error?: string
 }
 
+// ── Prompt Store ──────────────────────────────────────────────────────────────
+export interface Prompt {
+  id: string
+  title: string
+  content: string
+  tags: string[]
+  collectionId: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Collection {
+  id: string
+  name: string
+  createdAt: string
+}
+
+export interface PromptsData {
+  prompts: Prompt[]
+  collections: Collection[]
+}
+
 declare global {
   interface Window {
+    promptsAPI: {
+      load: () => Promise<PromptsData>
+      save: (data: PromptsData) => Promise<void>
+    }
     skillsAPI: {
       scanAll: () => Promise<ToolSummary[]>
       getReadme: (skillPath: string) => Promise<string>

@@ -45,8 +45,8 @@ export default function Faq() {
             key={i}
             className="rounded-2xl border overflow-hidden"
             animate={{
-              borderColor: isOpen ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)',
-              backgroundColor: isOpen ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0)',
+              borderColor: isOpen ? 'rgba(139,92,246,0.3)' : 'rgba(255,255,255,0.06)',
+              backgroundColor: isOpen ? 'rgba(139,92,246,0.05)' : 'rgba(255,255,255,0)',
             }}
             transition={{ duration: 0.2 }}
           >
@@ -56,7 +56,7 @@ export default function Faq() {
             >
               <motion.span
                 className="flex-1 font-medium text-[0.9375rem]"
-                animate={{ color: isOpen ? '#ffffff' : '#a1a1aa' }}
+                animate={{ color: isOpen ? '#ffffff' : '#94a3b8' }}
                 transition={{ duration: 0.2 }}
               >
                 {item.q}
@@ -66,7 +66,7 @@ export default function Faq() {
                 className="shrink-0"
                 animate={{
                   rotate: isOpen ? 180 : 0,
-                  color: isOpen ? '#ffffff' : '#3f3f46',
+                  color: isOpen ? '#a78bfa' : '#3f3f46',
                 }}
                 transition={{ duration: 0.25 }}
               >
@@ -91,7 +91,7 @@ export default function Faq() {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.25, ease: 'easeInOut' }}
                 >
-                  <p className="px-5 pb-5 text-sm text-[#858585] leading-relaxed">
+                  <p className="px-5 pb-5 text-sm text-slate-500 leading-relaxed">
                     {item.a}
                   </p>
                 </motion.div>

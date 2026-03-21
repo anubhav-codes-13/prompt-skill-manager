@@ -5,6 +5,7 @@ import SkillDetail from './components/SkillDetail'
 import Header from './components/Header'
 import InstallModal from './components/InstallModal'
 import Marketplace from './components/Marketplace'
+import PromptsView from './components/PromptsView'
 import { ToolIcon } from './components/ToolIcon'
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState<'all' | 'enabled' | 'disabled'>('all')
   const [showInstallModal, setShowInstallModal] = useState(false)
   const [installRepo, setInstallRepo] = useState<string | undefined>(undefined)
-  const [view, setView] = useState<'skills' | 'discover'>('skills')
+  const [view, setView] = useState<'skills' | 'discover' | 'prompts'>('skills')
 
   const loadSkills = useCallback(async () => {
     setLoading(true)
@@ -114,6 +115,8 @@ export default function App() {
             />
           </div>
         </div>
+      ) : view === 'prompts' ? (
+        <PromptsView />
       ) : (
         <div className="flex flex-1 overflow-hidden p-2 gap-2">
           <Sidebar

@@ -35,6 +35,39 @@ function getGithubToken(): string {
   return process.env.GITHUB_TOKEN || readConfig().githubToken || ''
 }
 
+// ── Prompts storage ───────────────────────────────────────────────────────────
+interface PromptsFileData {
+  prompts: Array<{
+    id: string; title: string; content: string; tags: string[]
+    collectionId: string | null; createdAt: string; updatedAt: string
+  }>
+  collections: Array<{ id: string; name: string; createdAt: string }>
+}
+
+function getPromptsPath(): string {
+  return path.join(app.getPath('userData'), 'prompts.json')
+}
+
+function readPrompts(): PromptsFileData {
+  try {
+    const raw = fs.readFileSync(getPromptsPath(), 'utf-8')
+    const parsed = JSON.parse(raw) as PromptsFileData
+    return {
+      prompts: Array.isArray(parsed.prompts) ? parsed.prompts : [],
+      collections: Array.isArray(parsed.collections) ? parsed.collections : [],
+    }
+  } catch {
+    return { prompts: [], collections: [] }
+  }
+}
+
+function writePrompts(data: PromptsFileData): void {
+  try {
+    fs.mkdirSync(path.dirname(getPromptsPath()), { recursive: true })
+    fs.writeFileSync(getPromptsPath(), JSON.stringify(data, null, 2))
+  } catch { /* ignore */ }
+}
+
 // All supported tool skill paths
 const TOOL_PATHS: Record<string, string> = {
   'Claude Code': path.join(home, '.claude', 'skills'),
@@ -548,6 +581,12 @@ ipcMain.handle('skills:searchMarketplace', (_e, query: string, page: number) => 
   }
   const params = new URLSearchParams({ q: query, type: 'skills', limit: '24', page: String(page) })
   return doGet(`https://mcpmarket.com/api/search?${params}`)
+})
+
+ipcMain.handle('prompts:load', () => readPrompts())
+
+ipcMain.handle('prompts:save', (_e, data: PromptsFileData) => {
+  writePrompts(data)
 })
 
 app.whenReady().then(createWindow)
