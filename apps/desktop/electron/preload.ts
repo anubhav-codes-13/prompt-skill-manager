@@ -5,6 +5,11 @@ contextBridge.exposeInMainWorld('promptsAPI', {
   save: (data: unknown) => ipcRenderer.invoke('prompts:save', data),
 })
 
+contextBridge.exposeInMainWorld('profileAPI', {
+  get: () => ipcRenderer.invoke('profile:get'),
+  set: (data: unknown) => ipcRenderer.invoke('profile:set', data),
+})
+
 contextBridge.exposeInMainWorld('skillsAPI', {
   scanAll: () => ipcRenderer.invoke('skills:scanAll'),
   getReadme: (skillPath: string) => ipcRenderer.invoke('skills:getReadme', skillPath),

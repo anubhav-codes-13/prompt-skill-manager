@@ -81,5 +81,9 @@ declare global {
       getGithubToken: () => Promise<string>
       setGithubToken: (token: string) => Promise<void>
     }
+    profileAPI: {
+      get: () => Promise<{ name: string; imageBase64: string | null }>
+      set: (data: { name: string; imageBase64: string | null }) => Promise<void>
+    }
   }
 }

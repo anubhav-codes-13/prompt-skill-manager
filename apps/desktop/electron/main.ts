@@ -35,6 +35,32 @@ function getGithubToken(): string {
   return process.env.GITHUB_TOKEN || readConfig().githubToken || ''
 }
 
+// ── User profile ──────────────────────────────────────────────────────────────
+interface Profile {
+  name: string
+  imageBase64: string | null
+}
+
+function getProfilePath(): string {
+  return path.join(app.getPath('userData'), 'profile.json')
+}
+
+function readProfile(): Profile {
+  try {
+    const raw = fs.readFileSync(getProfilePath(), 'utf-8')
+    return JSON.parse(raw) as Profile
+  } catch {
+    return { name: '', imageBase64: null }
+  }
+}
+
+function writeProfile(data: Profile): void {
+  try {
+    fs.mkdirSync(path.dirname(getProfilePath()), { recursive: true })
+    fs.writeFileSync(getProfilePath(), JSON.stringify(data, null, 2))
+  } catch { /* ignore */ }
+}
+
 // ── Prompts storage ───────────────────────────────────────────────────────────
 interface PromptsFileData {
   prompts: Array<{
@@ -587,6 +613,12 @@ ipcMain.handle('prompts:load', () => readPrompts())
 
 ipcMain.handle('prompts:save', (_e, data: PromptsFileData) => {
   writePrompts(data)
+})
+
+ipcMain.handle('profile:get', () => readProfile())
+
+ipcMain.handle('profile:set', (_e, data: Profile) => {
+  writeProfile(data)
 })
 
 app.whenReady().then(createWindow)
