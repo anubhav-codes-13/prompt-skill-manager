@@ -231,7 +231,7 @@ function MobileNav() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-white/[0.04] backdrop-blur-2xl"
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.04] backdrop-blur-2xl"
       style={{ background: 'rgba(2,2,9,0.88)' }}
     >
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
