@@ -240,6 +240,33 @@ const HNIcon = () => (
   </svg>
 )
 
+// ── Helper: Robust Smooth Scroll ──────────────────────────────────────────
+const scrollToSection = (e: React.MouseEvent, id: string, callback?: () => void) => {
+  const targetId = id.replace('#', '')
+  if (targetId === '/') return
+
+  e.preventDefault()
+  if (callback) callback()
+
+  // Small delay to let the menu closing transition begin
+  // and ensure any "scroll-lock" is being released.
+  setTimeout(() => {
+    const element = document.getElementById(targetId)
+    if (element) {
+      const offset = 80 // header height
+      const bodyRect = document.body.getBoundingClientRect().top
+      const elementRect = element.getBoundingClientRect().top
+      const elementPosition = elementRect - bodyRect
+      const offsetPosition = elementPosition - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }, 100)
+}
+
 // ── Mobile-responsive Nav ─────────────────────────────────────────────────
 function MobileNav({ activeSection, stars }: { activeSection: string; stars: number | null }) {
   const [open, setOpen] = useState(false)
@@ -286,10 +313,11 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          {links.slice(0, 3).map((l) => (
+          {links.slice(0, 4).map((l) => (
             <a
               key={l.label}
               href={l.href}
+              onClick={(e) => scrollToSection(e, l.href)}
               className={`text-sm transition-colors duration-200 ${activeSection && l.href === `#${activeSection}` ? 'text-violet-400' : 'text-slate-500 hover:text-slate-200'}`}
             >
               {l.label}
@@ -311,6 +339,7 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
           </a>
           <a
             href="#cta"
+            onClick={(e) => scrollToSection(e, '#cta')}
             className="text-xs font-semibold px-3.5 py-1.5 rounded-lg text-white transition-all duration-200 hover:brightness-110"
             style={{ background: 'linear-gradient(135deg, #6d28d9, #7c3aed)' }}
           >
@@ -351,16 +380,19 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
         style={{ background: 'rgba(2,2,9,0.96)' }}
       >
         <nav className="flex flex-col px-6 py-4 gap-1">
-          {links.map((l, i) => (
-            <motion.a
+          {links.map((l) => (
+            <a
               key={l.label}
               href={l.href}
               target={l.external ? '_blank' : undefined}
               rel={l.external ? 'noopener noreferrer' : undefined}
-              onClick={() => setOpen(false)}
-              initial={{ opacity: 0, x: -12 }}
-              animate={open ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
-              transition={{ duration: 0.22, delay: i * 0.04 }}
+              onClick={(e) => {
+                if (!l.external) {
+                  scrollToSection(e, l.href, () => setOpen(false))
+                } else {
+                  setOpen(false)
+                }
+              }}
               className="flex items-center gap-3 py-3 text-sm text-slate-400 hover:text-white transition-colors border-b border-white/[0.04] last:border-0"
             >
               {l.label === 'Download' && (
@@ -372,7 +404,7 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
                 </span>
               )}
               {l.label}
-            </motion.a>
+            </a>
           ))}
         </nav>
       </motion.div>

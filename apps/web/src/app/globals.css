@@ -7,9 +7,10 @@
     box-sizing: border-box;
   }
 
-  html {
+  html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 
@@ -312,8 +313,7 @@
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Smooth inertia for scroll-based elements */
-* {
+html {
   scroll-behavior: smooth;
 }
 /* ── Liquid / Shimmer Text ── */
