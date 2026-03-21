@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/prompt-skill-manger-1.0.jpg',
+    apple: '/prompt-skill-manger-1.0.jpg',
+  },
   openGraph: {
     title: 'Prompt Skill Manager — Universal AI Agent Skills',
     description: 'Universal AI agent skills manager for Claude Code, Cursor, Copilot, and more.',
@@ -29,7 +33,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/prompt-skill-manger-1.0.jpg',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'Prompt Skill Manager — One place for all your AI skills',
@@ -40,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Prompt Skill Manager — Universal AI Agent Skills',
     description: 'Universal AI agent skills manager for Claude Code, Cursor, Copilot, and more.',
-    images: ['/prompt-skill-manger-1.0.jpg'],
+    images: ['/opengraph-image'],
   },
 }
 

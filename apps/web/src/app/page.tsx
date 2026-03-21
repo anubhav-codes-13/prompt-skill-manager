@@ -5,7 +5,7 @@ import Faq from './Faq'
 import { AgentIcon } from './AgentIcon'
 import ScrollReveal from './ScrollReveal'
 import { ShootingStars } from './ShootingStars'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, useInView, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import Image from 'next/image'
 import ElectricBorder from './ElectricBorder'
 import FloatingParticles from './FloatingParticles'
@@ -71,6 +71,20 @@ const agents = [
   'Kilo Code',
   'Trae',
   'Antigravity',
+]
+
+const agentDetails = [
+  { name: 'Claude Code', path: '~/.claude/commands/', status: 'supported' as const },
+  { name: 'Cursor', path: '~/.cursor/rules/', status: 'supported' as const },
+  { name: 'Gemini CLI', path: '~/.gemini/skills/', status: 'supported' as const },
+  { name: 'Windsurf', path: '~/.codeium/windsurf/', status: 'supported' as const },
+  { name: 'GitHub Copilot', path: '.github/copilot/', status: 'supported' as const },
+  { name: 'Goose', path: '~/.config/goose/', status: 'supported' as const },
+  { name: 'OpenAI Codex', path: '~/.codex/', status: 'supported' as const },
+  { name: 'OpenCode', path: '~/.opencode/', status: 'supported' as const },
+  { name: 'Kilo Code', path: '.kilocode/', status: 'supported' as const },
+  { name: 'Trae', path: '~/.trae/', status: 'beta' as const },
+  { name: 'Antigravity', path: '~/.antigravity/', status: 'beta' as const },
 ]
 
 const features = [
@@ -146,38 +160,50 @@ const testimonials = [
   {
     quote: "This solves a real annoyance. Having one place to manage and push skills across agents is a workflow I didn't know I needed.",
     source: 'Product Hunt',
+    sourceUrl: 'https://www.producthunt.com/products/ai-skills-manager',
     name: 'Alex Rivers',
-    avatar: 'https://i.pravatar.cc/150?u=alex',
+    gradientFrom: '#7c3aed',
+    gradientTo: '#6366f1',
   },
   {
     quote: "The fragmentation problem across agents is real. The unified view approach makes sense — this is exactly what we needed.",
     source: 'Hacker News',
+    sourceUrl: 'https://news.ycombinator.com',
     name: 'Sarah Chen',
-    avatar: 'https://i.pravatar.cc/150?u=sarah',
+    gradientFrom: '#0ea5e9',
+    gradientTo: '#6366f1',
   },
   {
     quote: "The skills discoverability problem is real — I end up rediscovering the same prompt patterns across projects.",
     source: 'Hacker News',
+    sourceUrl: 'https://news.ycombinator.com',
     name: 'Marcus Thorne',
-    avatar: 'https://i.pravatar.cc/150?u=marcus',
+    gradientFrom: '#059669',
+    gradientTo: '#0ea5e9',
   },
   {
     quote: "As someone using agents but not at home with NPM, I like this. Simple, direct, does what it says.",
     source: 'Hacker News',
+    sourceUrl: 'https://news.ycombinator.com',
     name: 'Elena Garcia',
-    avatar: 'https://i.pravatar.cc/150?u=elena',
+    gradientFrom: '#d97706',
+    gradientTo: '#dc2626',
   },
   {
     quote: "Every time I want to test the same skill in Cursor or another agent, it's manual file copying and adjusting paths.",
     source: 'Product Hunt',
+    sourceUrl: 'https://www.producthunt.com/products/ai-skills-manager',
     name: 'James Wilson',
-    avatar: 'https://i.pravatar.cc/150?u=james',
+    gradientFrom: '#7c3aed',
+    gradientTo: '#ec4899',
   },
   {
     quote: "We need a unified skill marketplace for different agents — good work, this is a step in the right direction.",
     source: 'Hacker News',
+    sourceUrl: 'https://news.ycombinator.com',
     name: 'Lila Okafor',
-    avatar: 'https://i.pravatar.cc/150?u=lila',
+    gradientFrom: '#0891b2',
+    gradientTo: '#059669',
   },
 ]
 
@@ -215,8 +241,10 @@ const HNIcon = () => (
 )
 
 // ── Mobile-responsive Nav ─────────────────────────────────────────────────
-function MobileNav() {
+function MobileNav({ activeSection, stars }: { activeSection: string; stars: number | null }) {
   const [open, setOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
 
   const links = [
     { label: 'What is it?', href: '#what-is-it' },
@@ -235,13 +263,21 @@ function MobileNav() {
       className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.04] backdrop-blur-2xl"
       style={{ background: 'rgba(2,2,9,0.88)' }}
     >
+      {/* Scroll progress bar */}
+      <motion.div
+        style={{ scaleX, transformOrigin: '0%' }}
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500 to-cyan-400 z-10"
+      />
+
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5">
-          <img
+          <Image
             src="/prompt-skill-manger-1.0.jpg"
             alt="Prompt Skill Manager"
-            className="h-7 w-7 rounded-lg object-cover flex-shrink-0"
+            width={28}
+            height={28}
+            className="rounded-lg object-cover flex-shrink-0"
           />
           <span className="font-heading text-base tracking-tight text-white">
             Prompt Skill Manager
@@ -254,7 +290,7 @@ function MobileNav() {
             <a
               key={l.label}
               href={l.href}
-              className="text-sm text-slate-500 hover:text-slate-200 transition-colors duration-200"
+              className={`text-sm transition-colors duration-200 ${activeSection && l.href === `#${activeSection}` ? 'text-violet-400' : 'text-slate-500 hover:text-slate-200'}`}
             >
               {l.label}
             </a>
@@ -263,10 +299,15 @@ function MobileNav() {
             href="https://github.com/zunalabs/prompt-skill-manager"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-500 hover:text-violet-400 transition-colors duration-200"
+            className="flex items-center gap-1.5 text-slate-500 hover:text-violet-400 transition-colors duration-200"
             aria-label="GitHub"
           >
             <GitHubIcon />
+            {stars != null && (
+              <span className="text-[10px] text-slate-600">
+                {stars >= 1000 ? `${(stars / 1000).toFixed(1)}k` : stars}★
+              </span>
+            )}
           </a>
           <a
             href="#cta"
@@ -632,8 +673,277 @@ function WhatIsIt() {
   )
 }
 
+// ── Mac Waitlist ────────────────────────────────────────────────────────
+function MacWaitlist() {
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  if (submitted) {
+    return (
+      <span className="inline-flex items-center gap-2 text-emerald-400 text-sm px-7 py-4">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        You&apos;re on the Mac list!
+      </span>
+    )
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        if (!email) return
+        try { localStorage.setItem('mac-waitlist', email) } catch {}
+        setSubmitted(true)
+      }}
+      className="flex items-center gap-2"
+    >
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email for Mac launch"
+        required
+        className="text-sm text-slate-300 placeholder-slate-600 bg-transparent border border-white/[0.08] rounded-2xl px-4 py-4 w-44 focus:outline-none focus:border-violet-500/40 transition-colors"
+      />
+      <button
+        type="submit"
+        className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white border border-white/[0.08] hover:border-violet-400/40 px-5 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06] whitespace-nowrap"
+        style={{ background: 'rgba(255,255,255,0.03)' }}
+      >
+        <MacIcon />
+        Notify me
+      </button>
+    </form>
+  )
+}
+
+// ── How It Works ─────────────────────────────────────────────────────────
+function HowItWorks() {
+  const steps = [
+    {
+      number: '01',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M11 3v10M11 13l-3.5-3.5M11 13l3.5-3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M3 18h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+        </svg>
+      ),
+      title: 'Download',
+      desc: 'Get the app for Windows or Linux. 60-second install, no account needed.',
+      color: 'from-violet-600/20 to-purple-700/10',
+      iconColor: '#a78bfa',
+    },
+    {
+      number: '02',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="3" y="3" width="16" height="13" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+          <path d="M7 19h8M11 16v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          <circle cx="11" cy="9.5" r="2.5" stroke="currentColor" strokeWidth="1.8"/>
+        </svg>
+      ),
+      title: 'Open',
+      desc: 'Launch the app. It instantly scans your machine and finds all installed agent skills.',
+      color: 'from-blue-600/20 to-cyan-600/10',
+      iconColor: '#60a5fa',
+    },
+    {
+      number: '03',
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+          <rect x="12" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+          <rect x="2" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+          <rect x="12" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+        </svg>
+      ),
+      title: 'Manage',
+      desc: 'Enable, disable, copy across agents, install from GitHub, and browse the marketplace.',
+      color: 'from-cyan-600/20 to-teal-600/10',
+      iconColor: '#67e8f9',
+    },
+  ]
+
+  return (
+    <section id="how-it-works" className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[100px]"
+        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.05) 0%, transparent 70%)' }}
+      />
+      <div className="max-w-5xl mx-auto px-6 relative">
+        <ScrollReveal>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center">
+            Getting started
+          </p>
+          <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-16 tracking-tight">
+            Up and running in 3 steps
+          </h2>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+          {/* Connecting line (desktop only) */}
+          <div
+            className="hidden md:block absolute top-14 left-[calc(16.67%+24px)] right-[calc(16.67%+24px)] h-px"
+            style={{ background: 'linear-gradient(90deg, rgba(139,92,246,0.3), rgba(96,165,250,0.3), rgba(103,232,249,0.3))' }}
+          />
+
+          {steps.map((step, i) => (
+            <ScrollReveal key={step.title} delay={i * 100}>
+              <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+                className={`relative rounded-2xl p-6 bg-gradient-to-br ${step.color}`}
+                style={{ border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                {/* Step number */}
+                <div
+                  className="absolute -top-3 -right-1 text-[10px] font-black tabular-nums"
+                  style={{ color: 'rgba(255,255,255,0.12)', fontSize: 52, lineHeight: 1 }}
+                >
+                  {step.number}
+                </div>
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 relative z-10"
+                  style={{ background: 'rgba(255,255,255,0.05)', color: step.iconColor, border: `1px solid ${step.iconColor}22` }}
+                >
+                  {step.icon}
+                </div>
+                <h3 className="text-base font-bold text-white mb-2 relative z-10">{step.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed relative z-10">{step.desc}</p>
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Supported Agents Grid ─────────────────────────────────────────────────
+function AgentsGrid() {
+  return (
+    <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6">
+        <ScrollReveal>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center">
+            Full compatibility
+          </p>
+          <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-4 tracking-tight">
+            Every major AI coding assistant
+          </h2>
+          <p className="text-center text-sm text-slate-500 mb-12 max-w-md mx-auto leading-relaxed">
+            We track each agent&apos;s skill directory and file format so you don&apos;t have to.
+          </p>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {agentDetails.map((agent, i) => (
+            <ScrollReveal key={agent.name} delay={i * 50}>
+              <motion.div
+                whileHover={{ y: -3, borderColor: 'rgba(139,92,246,0.3)' }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-4 rounded-xl px-4 py-3.5"
+                style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(139,92,246,0.08)' }}
+                >
+                  <AgentIcon agent={agent.name} size={20} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-white truncate">{agent.name}</p>
+                  <p className="text-[11px] text-slate-600 font-mono truncate">{agent.path}</p>
+                </div>
+                <span
+                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                  style={
+                    agent.status === 'supported'
+                      ? { background: 'rgba(16,185,129,0.1)', color: '#10b981', border: '1px solid rgba(16,185,129,0.2)' }
+                      : { background: 'rgba(251,191,36,0.1)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.2)' }
+                  }
+                >
+                  {agent.status === 'supported' ? 'Supported' : 'Beta'}
+                </span>
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Comparison Table ──────────────────────────────────────────────────────
+function ComparisonTable() {
+  const rows = [
+    { without: 'Hunt through hidden config folders', with: 'One unified view of all skills' },
+    { without: 'Manually copy files between agents', with: 'One-click copy between any agents' },
+    { without: 'Re-type skills for each agent', with: 'Install from GitHub to all at once' },
+    { without: 'No discovery — use what you know', with: 'Browse marketplace, find community skills' },
+    { without: 'Delete to "disable" a skill', with: 'Toggle on/off, re-enable anytime' },
+  ]
+
+  return (
+    <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse 50% 60% at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%)' }}
+      />
+      <div className="max-w-3xl mx-auto px-6 relative">
+        <ScrollReveal>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center">
+            The difference
+          </p>
+          <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-14 tracking-tight">
+            Managing skills <span className="line-through text-slate-600">without</span> Prompt Skill Manager
+          </h2>
+        </ScrollReveal>
+
+        <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Header */}
+          <div className="grid grid-cols-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+            <div className="px-5 py-3 flex items-center gap-2 border-r border-white/[0.04]">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L1 7l6 6M1 7h12" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span className="text-xs font-bold text-red-400/70 uppercase tracking-wider">Without</span>
+            </div>
+            <div className="px-5 py-3 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span className="text-xs font-bold text-emerald-400/70 uppercase tracking-wider">With PSM</span>
+            </div>
+          </div>
+
+          {rows.map((row, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-2 border-t border-white/[0.04]"
+              style={{ background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}
+            >
+              <div className="px-5 py-4 flex items-center gap-2.5 border-r border-white/[0.04]">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500/40 flex-shrink-0" />
+                <span className="text-sm text-slate-500 leading-relaxed">{row.without}</span>
+              </div>
+              <div className="px-5 py-4 flex items-center gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/60 flex-shrink-0" />
+                <span className="text-sm text-slate-300 leading-relaxed">{row.with}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Home() {
   const [downloads, setDownloads] = useState<number | null>(null)
+  const [stars, setStars] = useState<number | null>(null)
+  const [detectedOS, setDetectedOS] = useState<'windows' | 'linux' | 'mac' | null>(null)
+  const [activeSection, setActiveSection] = useState('')
   const [cursor, setCursor] = useState({ x: 0, y: 0 })
   const heroRef = useRef<HTMLElement>(null)
 
@@ -655,6 +965,36 @@ export default function Home() {
       .then((r) => r.json())
       .then((d) => setDownloads(d.total))
       .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/stars')
+      .then((r) => r.json())
+      .then((d) => setStars(d.stars))
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const ua = navigator.userAgent.toLowerCase()
+    if (ua.includes('win')) setDetectedOS('windows')
+    else if (ua.includes('mac')) setDetectedOS('mac')
+    else if (ua.includes('linux')) setDetectedOS('linux')
+  }, [])
+
+  useEffect(() => {
+    const sectionIds = ['what-is-it', 'features', 'demo', 'cta']
+    const observers: IntersectionObserver[] = []
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id) },
+        { rootMargin: '-30% 0px -60% 0px' }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+    return () => observers.forEach((obs) => obs.disconnect())
   }, [])
 
   const [activeTestimonial, setActiveTestimonial] = useState(0)
@@ -732,7 +1072,7 @@ export default function Home() {
       />
 
       {/* ── Nav ── */}
-      <MobileNav />
+      <MobileNav activeSection={activeSection} stars={stars} />
 
       {/* ── Hero ── */}
       <section ref={heroRef} className="relative overflow-hidden min-h-[100svh] flex items-center grain-overlay">
@@ -769,9 +1109,20 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 text-center relative z-[10] pt-32 pb-24 w-full">
 
           {/* Badge */}
-          <motion.div {...fadeUp(0)}>
+          <motion.div {...fadeUp(0)} className="flex flex-col items-center gap-3 mb-10">
+            {/* Changelog pill */}
+            <a
+              href="https://github.com/zunalabs/prompt-skill-manager/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold transition-all hover:scale-105"
+              style={{ background: 'rgba(30,30,50,0.8)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8' }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+              v1.0 released — What&apos;s new →
+            </a>
             <span
-              className="inline-flex items-center gap-2 mb-10 rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-300"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-300"
               style={{ background: 'rgba(88,28,135,0.25)', border: '1px solid rgba(139,92,246,0.35)' }}
             >
               <span
@@ -856,60 +1207,53 @@ export default function Home() {
             {...fadeUp(0.36)}
           >
             {/* Windows */}
-            <Magnetic>
-              <ElectricBorder color="#a78bfa" speed={0.8} chaos={0.1} borderRadius={16}>
-                <a
-                  href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
-                  style={{
-                    background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)',
-                  }}
-                >
-                  <WindowsIcon />
-                  Download for Windows
-                </a>
-              </ElectricBorder>
-            </Magnetic>
+            <div className="relative">
+              {detectedOS === 'windows' && (
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-emerald-400">
+                  ★ Recommended for you
+                </div>
+              )}
+              <Magnetic>
+                <ElectricBorder color={detectedOS === 'windows' ? '#34d399' : '#a78bfa'} speed={0.8} chaos={0.1} borderRadius={16}>
+                  <a
+                    href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
+                    style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)' }}
+                  >
+                    <WindowsIcon />
+                    Download for Windows
+                  </a>
+                </ElectricBorder>
+              </Magnetic>
+            </div>
 
             {/* Linux */}
-            <Magnetic>
-              <a
-                href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border border-white/[0.08] hover:border-violet-400/40 px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06]"
-                style={{ background: 'rgba(255,255,255,0.03)' }}
-              >
-                <Image src="/linux.svg" alt="Linux" width={15} height={15} />
-                Download for Linux
-              </a>
-            </Magnetic>
+            <div className="relative">
+              {detectedOS === 'linux' && (
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-emerald-400">
+                  ★ Recommended for you
+                </div>
+              )}
+              <Magnetic>
+                <a
+                  href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06] ${detectedOS === 'linux' ? 'border-emerald-500/40' : 'border-white/[0.08] hover:border-violet-400/40'}`}
+                  style={{ background: 'rgba(255,255,255,0.03)' }}
+                >
+                  <Image src="/linux.svg" alt="Linux" width={15} height={15} />
+                  Download for Linux
+                </a>
+              </Magnetic>
+            </div>
 
-            {/* Mac — coming soon */}
-            <span className="inline-flex items-center gap-2.5 text-sm text-slate-700 border border-slate-800/50 px-7 py-4 rounded-2xl cursor-not-allowed">
-              <MacIcon />
-              Mac — coming soon
-            </span>
+            {/* Mac — waitlist */}
+            <MacWaitlist />
           </motion.div>
 
-          {/* Product Hunt badge */}
-          <motion.div className="flex justify-center mb-6" {...fadeUp(0.42)}>
-            <a
-              href="https://www.producthunt.com/products/ai-skills-manager?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-ai-skills-manager"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="opacity-70 hover:opacity-100 transition-opacity"
-            >
-              <img
-                alt="AI Prompt Skill Manager - One place for all your AI skills | Product Hunt"
-                width={250}
-                height={54}
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1102479&theme=dark&t=1773999174865"
-              />
-            </a>
-          </motion.div>
 
           {/* SmartScreen note */}
           <motion.p className="text-[11px] text-slate-600 mb-16" {...fadeUp(0.46)}>
@@ -929,7 +1273,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 48 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.52 }}
-            className="relative"
+            className="relative hidden sm:block"
           >
             {/* Glow behind screenshot */}
             <div
@@ -963,10 +1307,13 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <img
+                  <Image
                     src="/prompt-skill-manger-1.0.jpg"
                     alt="Prompt Skill Manager app screenshot"
+                    width={1200}
+                    height={780}
                     className="w-full block"
+                    priority
                   />
                   <div
                     className="absolute inset-x-0 top-0 h-px"
@@ -979,6 +1326,9 @@ export default function Home() {
 
         </div>
       </section>
+
+      {/* ── How It Works ── */}
+      <HowItWorks />
 
       {/* ── What is it? ── */}
       <WhatIsIt />
@@ -1025,6 +1375,9 @@ export default function Home() {
         </div>
       </section>
       
+      {/* ── Agents Grid ── */}
+      <AgentsGrid />
+
       <div className="container px-6">
         <div className="glow-divider" />
       </div>
@@ -1188,6 +1541,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Comparison Table ── */}
+      <ComparisonTable />
 
       {/* ── Prompt Library ── */}
       <section className="border-t border-white/[0.04] py-28 relative overflow-hidden">
@@ -1404,17 +1760,23 @@ export default function Home() {
                     </p>
                     {/* Author */}
                     <div className="flex items-center justify-center gap-3">
-                      <img
-                        src={t.avatar}
-                        alt={t.name}
-                        className="w-9 h-9 rounded-full border border-violet-500/20 object-cover"
-                      />
+                      <div
+                        className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                        style={{ background: `linear-gradient(135deg, ${t.gradientFrom}, ${t.gradientTo})` }}
+                      >
+                        {t.name.split(' ').map(n => n[0]).join('')}
+                      </div>
                       <div className="text-left">
                         <p className="text-sm font-semibold text-white">{t.name}</p>
-                        <div className="flex items-center gap-1.5 opacity-50">
+                        <a
+                          href={t.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 opacity-50 hover:opacity-80 transition-opacity"
+                        >
                           {t.source === 'Product Hunt' ? <PHIcon /> : <HNIcon />}
                           <span className="text-[10px] uppercase tracking-widest">{t.source}</span>
-                        </div>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -1543,10 +1905,7 @@ export default function Home() {
                 Download for Linux
               </a>
 
-              <span className="inline-flex items-center gap-2.5 text-sm text-slate-700 border border-slate-800/50 px-7 py-4 rounded-2xl cursor-not-allowed">
-                <MacIcon />
-                Mac — coming soon
-              </span>
+              <MacWaitlist />
             </div>
 
             <p className="text-[11px] text-slate-700">
@@ -1568,10 +1927,12 @@ export default function Home() {
       <footer className="border-t border-white/[0.04] py-10">
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <img
+            <Image
               src="/prompt-skill-manger-1.0.jpg"
               alt=""
-              className="h-6 w-6 rounded-lg object-cover opacity-70"
+              width={24}
+              height={24}
+              className="rounded-lg object-cover opacity-70"
             />
             <span className="font-heading text-sm text-slate-400">Prompt Skill Manager</span>
             <span className="text-slate-600 text-sm">

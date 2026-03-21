@@ -1,7 +1,9 @@
+import Image from 'next/image'
+
 export function AgentIcon({ agent, size = 24 }: { agent: string; size?: number }) {
   if (agent === 'Claude Code') return <ClaudeCodeIcon size={size} />
   if (agent === 'Antigravity') return <AntigravityIcon size={size} />
-  if (agent === 'Goose') return <img src="/goose.png" width={size} height={size} style={{ objectFit: 'contain' }} alt="Goose" />
+  if (agent === 'Goose') return <Image src="/goose.png" width={size} height={size} style={{ objectFit: 'contain' }} alt="Goose" />
   if (agent === 'GitHub Copilot') return <GitHubCopilotIcon size={size} />
   if (agent === 'Kilo Code') return <KiloCodeIcon size={size} />
   if (agent === 'Cursor') return <CursorIcon size={size} />
@@ -9,8 +11,8 @@ export function AgentIcon({ agent, size = 24 }: { agent: string; size?: number }
   if (agent === 'Gemini CLI') return <GeminiCLIIcon size={size} />
   if (agent === 'Windsurf') return <WindsurfIcon size={size} />
   if (agent === 'Trae') return <TraeIcon size={size} />
-  if (agent === 'OpenAI Codex') return <img src="/codex.png" width={size} height={size} style={{ objectFit: 'contain' }} alt="OpenAI Codex" />
-  return null
+  if (agent === 'OpenAI Codex') return <Image src="/codex.png" width={size} height={size} style={{ objectFit: 'contain' }} alt="OpenAI Codex" />
+  return <Image src="/prompt-skill-manger-1.0.jpg" width={size} height={size} style={{ objectFit: 'cover', borderRadius: 4 }} alt={agent} />
 }
 
 function ClaudeCodeIcon({ size }: { size: number }) {
