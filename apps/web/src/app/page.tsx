@@ -5,7 +5,7 @@ import Faq from './Faq'
 import { AgentIcon } from './AgentIcon'
 import ScrollReveal from './ScrollReveal'
 import { ShootingStars } from './ShootingStars'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import ElectricBorder from './ElectricBorder'
 import FloatingParticles from './FloatingParticles'
@@ -219,9 +219,10 @@ function MobileNav() {
   const [open, setOpen] = useState(false)
 
   const links = [
+    { label: 'What is it?', href: '#what-is-it' },
     { label: 'Features', href: '#features' },
     { label: 'Demo', href: '#demo' },
-    { label: 'Download', href: '#download' },
+    { label: 'Download', href: '#cta' },
     {
       label: 'GitHub',
       href: 'https://github.com/zunalabs/prompt-skill-manager',
@@ -236,7 +237,7 @@ function MobileNav() {
     >
       <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2.5">
+        <a href="/" className="flex items-center gap-2.5">
           <img
             src="/prompt-skill-manger-1.0.jpg"
             alt="Prompt Skill Manager"
@@ -245,7 +246,7 @@ function MobileNav() {
           <span className="font-heading text-base tracking-tight text-white">
             Prompt Skill Manager
           </span>
-        </div>
+        </a>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
@@ -268,7 +269,7 @@ function MobileNav() {
             <GitHubIcon />
           </a>
           <a
-            href="#download"
+            href="#cta"
             className="text-xs font-semibold px-3.5 py-1.5 rounded-lg text-white transition-all duration-200 hover:brightness-110"
             style={{ background: 'linear-gradient(135deg, #6d28d9, #7c3aed)' }}
           >
@@ -335,6 +336,299 @@ function MobileNav() {
         </nav>
       </motion.div>
     </header>
+  )
+}
+
+// ── What is it? ───────────────────────────────────────────────────────────
+function WhatIsIt() {
+  const [tab, setTab] = useState<'skills' | 'prompts'>('skills')
+
+  return (
+    <section id="what-is-it" className="border-t border-white/[0.04] py-28 relative overflow-hidden">
+      {/* Background glow */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] rounded-full blur-[140px]"
+        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)' }}
+      />
+
+      <div className="max-w-5xl mx-auto px-6 relative">
+        {/* Header */}
+        <ScrollReveal>
+          <div className="text-center mb-14">
+            <span
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] mb-6"
+              style={{ background: 'rgba(88,28,135,0.2)', border: '1px solid rgba(139,92,246,0.25)', color: '#c4b5fd' }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#a78bfa', boxShadow: '0 0 6px #a78bfa' }} />
+              The Essentials
+            </span>
+            <h2
+              className="font-extrabold tracking-tight mb-4 text-white"
+              style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', lineHeight: 1.1 }}
+            >
+              Two things that will change<br />
+              <span style={{ background: 'linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                how you work with AI
+              </span>
+            </h2>
+            <p className="text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
+              Skills teach your agents new tricks. Prompts store your best thinking.
+              Together, they make you dramatically faster — every single day.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Tab switcher */}
+        <ScrollReveal delay={80}>
+          <div className="flex items-center justify-center mb-14">
+            <div
+              className="flex p-1 rounded-2xl gap-1"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              {(['skills', 'prompts'] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTab(t)}
+                  className="relative px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 flex items-center gap-2.5"
+                  style={{
+                    background: tab === t
+                      ? t === 'skills'
+                        ? 'linear-gradient(135deg, rgba(109,40,217,0.7), rgba(124,58,237,0.7))'
+                        : 'linear-gradient(135deg, rgba(37,99,235,0.6), rgba(96,165,250,0.6))'
+                      : 'transparent',
+                    color: tab === t ? '#ffffff' : '#475569',
+                    boxShadow: tab === t ? '0 0 24px rgba(139,92,246,0.25), inset 0 1px 0 rgba(255,255,255,0.1)' : 'none',
+                  }}
+                >
+                  {t === 'skills' ? (
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden>
+                      <path d="M7 0L3.5 7h3.5L5.5 14 13 7H9L7 0z"/>
+                    </svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+                      <rect x="1" y="3" width="8" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                      <path d="M3 6.5h4M3 9h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                      <path d="M5 3V2a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4"/>
+                    </svg>
+                  )}
+                  {t === 'skills' ? 'Skills' : 'Prompts'}
+                  {tab === t && (
+                    <span
+                      className="text-[10px] px-1.5 py-0.5 rounded-md font-semibold"
+                      style={{ background: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.9)' }}
+                    >
+                      {t === 'skills' ? '11 agents' : 'new'}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Content panels */}
+        <AnimatePresence mode="wait">
+          {tab === 'skills' ? (
+            <motion.div
+              key="skills"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
+            >
+              {/* Left — skill file mockup */}
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#0a0a12', border: '1px solid rgba(139,92,246,0.15)', boxShadow: '0 0 40px rgba(139,92,246,0.08)' }}>
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.04]" style={{ background: 'rgba(139,92,246,0.06)' }}>
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#ff5f57' }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#febc2e' }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#28c840' }} />
+                  </div>
+                  <span className="text-[11px] text-violet-400/60 font-mono ml-1">~/.claude/commands/</span>
+                </div>
+                <div className="p-4 space-y-2">
+                  {[
+                    { cmd: '/commit', desc: 'Write conventional commit messages automatically', color: '#a78bfa', bg: 'rgba(167,139,250,0.08)' },
+                    { cmd: '/review', desc: 'Deep code review: security, perf & readability', color: '#60a5fa', bg: 'rgba(96,165,250,0.08)' },
+                    { cmd: '/docs', desc: 'Generate inline documentation from any function', color: '#34d399', bg: 'rgba(52,211,153,0.08)' },
+                    { cmd: '/refactor', desc: 'Suggest clean-code improvements', color: '#fbbf24', bg: 'rgba(251,191,36,0.08)' },
+                    { cmd: '/test', desc: 'Write unit tests for selected code', color: '#f87171', bg: 'rgba(248,113,113,0.08)' },
+                  ].map((skill, i) => (
+                    <motion.div
+                      key={skill.cmd}
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 + i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="group flex items-center gap-3 p-3 rounded-xl transition-all duration-200 cursor-default"
+                      style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)' }}
+                    >
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 font-bold font-mono text-sm"
+                        style={{ background: skill.bg, color: skill.color }}
+                      >
+                        /
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-bold text-white font-mono">{skill.cmd}</div>
+                        <div className="text-[11px] text-slate-600 truncate">{skill.desc}</div>
+                      </div>
+                      <div
+                        className="flex-shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-md"
+                        style={{ background: skill.bg, color: skill.color }}
+                      >
+                        skill
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right — explanation */}
+              <div className="space-y-7">
+                <div>
+                  <h3 className="text-2xl font-extrabold text-white mb-3 leading-tight">
+                    Slash commands that give<br />your AI agent superpowers
+                  </h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">
+                    Skills are markdown instruction files in your agent's config folder. Type{' '}
+                    <code className="text-violet-400 bg-violet-400/10 px-1.5 py-0.5 rounded text-xs font-mono">/commit</code>{' '}
+                    in Claude Code or Cursor and the agent follows your exact rules — every time, consistently.
+                  </p>
+                </div>
+                <div className="space-y-5">
+                  {[
+                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Just markdown files', desc: 'No plugins. Skills are plain .md files in a folder your agent already watches.' },
+                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Reused across every session', desc: 'Write once and it\'s available in every project, every conversation, forever.' },
+                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="3" stroke="currentColor" strokeWidth="1.5"/><circle cx="11" cy="11" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M7.5 5h1.5M7.5 11h-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Copy across all 11 agents', desc: 'Got a great Claude Code skill? One click copies it to Cursor, Windsurf, Copilot — done.' },
+                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M10 3h3v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, title: 'Share with your team', desc: 'Commit them to your repo. Every developer gets the same AI behaviour automatically.' },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 + i * 0.09, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex items-start gap-4"
+                    >
+                      <div
+                        className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center mt-0.5"
+                        style={{ background: item.color, color: item.textColor }}
+                      >
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white mb-0.5">{item.title}</p>
+                        <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="prompts"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
+            >
+              {/* Left — prompt library mockup */}
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#0a0a12', border: '1px solid rgba(96,165,250,0.15)', boxShadow: '0 0 40px rgba(96,165,250,0.06)' }}>
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.04]" style={{ background: 'rgba(59,130,246,0.05)' }}>
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#ff5f57' }} />
+                      <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#febc2e' }} />
+                      <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#28c840' }} />
+                    </div>
+                    <span className="text-[11px] text-blue-400/60 ml-1">Prompt Library</span>
+                  </div>
+                  <div className="text-[10px] px-2 py-0.5 rounded-md font-medium" style={{ background: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: '1px solid rgba(139,92,246,0.2)' }}>
+                    + New
+                  </div>
+                </div>
+                <div className="p-4 space-y-2">
+                  {[
+                    { title: 'Code Review Checklist', preview: 'Review for readability, edge cases, security issues, and performance bottlenecks...', tags: ['code', 'review'], color: 'rgba(139,92,246,0.07)' },
+                    { title: 'Git Commit Message', preview: 'Write a conventional commit. Format: type(scope): description. Types: feat, fix, docs...', tags: ['git'], color: 'rgba(96,165,250,0.07)' },
+                    { title: 'Debug Helper', preview: 'Analyze this error: explain what caused it, how to fix it, and how to prevent it next time...', tags: ['debug', 'fix'], color: 'rgba(248,113,113,0.07)' },
+                    { title: 'System Prompt', preview: 'You are an expert software engineer. Be concise, direct, and write clean, readable code...', tags: ['system'], color: 'rgba(52,211,153,0.07)' },
+                  ].map((card, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 + i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="group rounded-xl p-3 cursor-default"
+                      style={{ background: card.color, border: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                      <div className="flex items-start justify-between gap-2 mb-1.5">
+                        <span className="text-xs font-semibold text-zinc-200">{card.title}</span>
+                        <div
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1 flex-shrink-0"
+                          style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8' }}
+                        >
+                          <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M3 3V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4"/></svg>
+                          Copy
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-zinc-600 line-clamp-1 leading-relaxed">{card.preview}</p>
+                      <div className="flex gap-1 mt-2">
+                        {card.tags.map(tag => (
+                          <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(139,92,246,0.1)', color: '#a78bfa' }}>{tag}</span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right — explanation */}
+              <div className="space-y-7">
+                <div>
+                  <h3 className="text-2xl font-extrabold text-white mb-3 leading-tight">
+                    Your best thinking,<br />always one click away
+                  </h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">
+                    Prompts are the clever instructions you keep retyping into AI chats — the ones that actually work.
+                    Stop rewriting them from memory. Store once, find instantly, paste anywhere.
+                  </p>
+                </div>
+                <div className="space-y-5">
+                  {[
+                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Write once, reuse forever', desc: 'Never write "You are an expert..." from scratch again. Save what works.' },
+                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Search by title, tag or content', desc: 'Tag prompts like "git", "review", "debug" and find any prompt in under a second.' },
+                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'One-click copy to clipboard', desc: 'Hit copy, switch to your AI tool, paste. No hunting through Notion or sticky notes.' },
+                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3.5l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Works with any AI — not just agents', desc: 'ChatGPT, Claude, Gemini, Perplexity — prompts work everywhere you chat with AI.' },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 + i * 0.09, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex items-start gap-4"
+                    >
+                      <div
+                        className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center mt-0.5"
+                        style={{ background: item.color, color: item.textColor }}
+                      >
+                        {item.icon}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-white mb-0.5">{item.title}</p>
+                        <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
   )
 }
 
@@ -686,6 +980,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── What is it? ── */}
+      <WhatIsIt />
+
       {/* ── Agent Marquee ── */}
       <section
         className="border-t border-white/[0.04] py-16 overflow-hidden relative"
@@ -734,7 +1031,7 @@ export default function Home() {
 
       {/* ── Demo Video ── */}
       {YOUTUBE_VIDEO_ID && (
-        <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+        <section id="demo" className="border-t border-white/[0.04] py-24 relative overflow-hidden">
           <div
             className="pointer-events-none absolute inset-0"
             style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(99,102,241,0.04) 0%, transparent 70%)' }}
@@ -777,7 +1074,7 @@ export default function Home() {
       </div>
 
       {/* ── What It Does — 6-card grid ── */}
-      <section className="border-t border-white/[0.04] py-28 relative overflow-hidden">
+      <section id="features" className="border-t border-white/[0.04] py-28 relative overflow-hidden">
         <div
           className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[120px]"
           style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)' }}
@@ -1186,7 +1483,7 @@ export default function Home() {
       </section>
 
       {/* ── CTA — Cinematic ── */}
-      <section className="border-t border-white/[0.04] py-32 relative overflow-hidden">
+      <section id="cta" className="border-t border-white/[0.04] py-32 relative overflow-hidden">
         {/* Large purple orb */}
         <div
           className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] rounded-full blur-[120px]"
