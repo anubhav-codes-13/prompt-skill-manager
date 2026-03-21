@@ -296,7 +296,7 @@ function toggleSkill(skillPath: string, enabled: boolean): { ok: boolean; newPat
 let win: BrowserWindow | null = null
 
 function createWindow() {
-  const iconPath = path.join(__dirname, '../build/icon.png')
+  const iconPath = path.join(__dirname, '../public/prompt-skill-manger-1.0.jpg')
   win = new BrowserWindow({
     width: 1280,
     height: 800,
