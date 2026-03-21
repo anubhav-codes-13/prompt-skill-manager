@@ -522,7 +522,7 @@ function installFromGitHub(
 
       httpsGet(`https://api.github.com/repos/${owner}/${repoName}/contents/${dirPath}`, (raw) => {
         let files: Array<{ name: string; type: string; download_url: string | null }> = []
-        try { files = JSON.parse(raw) } catch { files = [] }
+        try { const parsed = JSON.parse(raw); files = Array.isArray(parsed) ? parsed : [] } catch { files = [] }
 
         const fileList = files.filter((f) => f.type === 'file')
         if (fileList.length === 0) { if (--pending === 0) resolve({ ok: true, installed }); return }
