@@ -31,6 +31,67 @@ const items = [
     q: 'Which agents are supported?',
     a: 'Currently: Claude Code, Cursor, Gemini CLI, Windsurf, GitHub Copilot, Goose, OpenAI Codex, OpenCode, Kilo Code, Trae, and Antigravity. New agents are added as they gain traction — contributions welcome.',
   },
+  {
+    q: 'Does it work offline?',
+    a: 'Almost entirely. Scanning and managing your local skills works 100% offline. The only features that need internet are: installing skills from a GitHub URL, browsing the marketplace, and fetching the GitHub star count shown in the navbar. Your skill files never leave your machine.',
+  },
+  {
+    q: 'Where are my skills stored?',
+    a: (
+      <>
+        Skills stay exactly where each agent expects them — Prompt Skill Manager reads and writes
+        directly to the native directories (e.g.{' '}
+        <span className="text-white font-mono text-xs border border-[rgba(255,255,255,0.12)] rounded px-1.5 py-0.5">
+          ~/.claude/commands/
+        </span>{' '}
+        for Claude Code,{' '}
+        <span className="text-white font-mono text-xs border border-[rgba(255,255,255,0.12)] rounded px-1.5 py-0.5">
+          ~/.cursor/rules/
+        </span>{' '}
+        for Cursor, and so on). Nothing is copied to a proprietary database or cloud. Disabling a
+        skill moves it to a{' '}
+        <span className="text-white font-mono text-xs border border-[rgba(255,255,255,0.12)] rounded px-1.5 py-0.5">
+          .disabled/
+        </span>{' '}
+        subfolder so it can be re-enabled at any time.
+      </>
+    ),
+  },
+  {
+    q: 'How do I install a skill from GitHub?',
+    a: "Open the app, click \"Install from GitHub\", and paste any public GitHub repository URL. The app uses GitHub's recursive tree API to scan for skill files, shows you a checklist to pick which ones you want, then downloads and places them into the correct directory for whichever agents you choose. A GitHub personal access token is optional but recommended to avoid rate limits on large repos.",
+  },
+  {
+    q: 'Can I copy a skill to multiple agents at once?',
+    a: 'Yes. Select the skill you want to share, choose "Copy to agent", and pick one or more target agents from the list. The app resolves each agent\'s skill directory automatically and handles any file-format differences. This is the fastest way to keep your best prompts in sync across your whole toolkit.',
+  },
+  {
+    q: 'Is there a Mac version?',
+    a: 'Not yet — Windows and Linux are available now. Mac support is actively being worked on and a waitlist is open on the homepage. Drop your email there and you\'ll be the first to know when it lands. The codebase is Electron-based so the port is straightforward; code signing and notarization are the main things being sorted out.',
+  },
+  {
+    q: 'How do I contribute or request a new agent?',
+    a: (
+      <>
+        Open an issue or pull request on the{' '}
+        <a
+          href="https://github.com/zunalabs/prompt-skill-manager"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-violet-400 underline hover:text-violet-300 transition-colors"
+        >
+          GitHub repository
+        </a>
+        . Adding a new agent typically means adding its skill directory path and file pattern to the
+        agent config — usually a one-file change. The codebase is fully TypeScript and the
+        contributing guide walks you through the process.
+      </>
+    ),
+  },
+  {
+    q: 'Does it collect any data or telemetry?',
+    a: 'None at all. There are no analytics, crash reporters, update pings, or any form of telemetry. The app makes outbound requests only when you explicitly trigger a GitHub install or marketplace browse — and only to GitHub\'s public API or mcpmarket.com. Your GitHub token (if set) is stored locally in your OS keychain and never transmitted anywhere else.',
+  },
 ]
 
 export default function Faq() {

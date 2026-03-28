@@ -7,7 +7,6 @@ import ScrollReveal from './ScrollReveal'
 import { ShootingStars } from './ShootingStars'
 import { motion, useInView, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import ElectricBorder from './ElectricBorder'
 import FloatingParticles from './FloatingParticles'
 import Magnetic from './Magnetic'
 
@@ -18,29 +17,11 @@ const fadeUp = (delay = 0) => ({
 })
 
 // Word-stagger: splits text into individual animated words
-function StaggerWords({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
-  const words = text.split(' ')
-  return (
-    <>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: delay + i * 0.07 }}
-          className={`inline-block ${className ?? ''}`}
-          style={{ marginRight: '0.25em' }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </>
-  )
-}
 
-// Count-up number animation
+// Count-up number animation — bounces on completion
 function CountUp({ to, suffix = '', duration = 1.6 }: { to: number; suffix?: string; duration?: number }) {
   const [count, setCount] = useState(0)
+  const [popped, setPopped] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
 
@@ -49,14 +30,70 @@ function CountUp({ to, suffix = '', duration = 1.6 }: { to: number; suffix?: str
     const start = performance.now()
     const tick = (now: number) => {
       const t = Math.min((now - start) / (duration * 1000), 1)
-      const ease = 1 - Math.pow(1 - t, 3) // ease-out-cubic
+      const ease = 1 - Math.pow(1 - t, 3)
       setCount(Math.round(ease * to))
       if (t < 1) requestAnimationFrame(tick)
+      else { setPopped(true); setTimeout(() => setPopped(false), 450) }
     }
     requestAnimationFrame(tick)
   }, [inView, to, duration])
 
-  return <span ref={ref}>{count}{suffix}</span>
+  return <span ref={ref} className={popped ? 'animate-num-pop inline-block' : 'inline-block'}>{count}{suffix}</span>
+}
+
+// Mouse-tracking spotlight inside each card
+function MouseSpotCard({ children, className, style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const [visible, setVisible] = useState(false)
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={style}
+      onMouseMove={(e) => {
+        const r = ref.current!.getBoundingClientRect()
+        setPos({ x: e.clientX - r.left, y: e.clientY - r.top })
+        setVisible(true)
+      }}
+      onMouseLeave={() => setVisible(false)}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 z-0 rounded-[inherit] transition-opacity duration-300"
+        style={{
+          opacity: visible ? 1 : 0,
+          background: `radial-gradient(280px circle at ${pos.x}px ${pos.y}px, rgba(139,92,246,0.13), transparent 65%)`,
+        }}
+      />
+      {children}
+    </div>
+  )
+}
+
+// Floating sparkles around a child element
+function Sparkles({ children }: { children: React.ReactNode }) {
+  const [sparks, setSparks] = useState<{ id: number; x: number; y: number; size: number }[]>([])
+  const add = () => {
+    const id = Date.now() + Math.random()
+    setSparks(s => [...s, { id, x: 40 + Math.random() * 60, y: Math.random() * 80, size: 6 + Math.random() * 7 }])
+    setTimeout(() => setSparks(s => s.filter(p => p.id !== id)), 700)
+  }
+  return (
+    <span className="relative inline-block" onMouseEnter={add}>
+      {sparks.map(s => (
+        <span
+          key={s.id}
+          className="sparkle pointer-events-none absolute"
+          style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, zIndex: 10 }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" width={s.size} height={s.size}>
+            <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" fill="#c4b5fd"/>
+          </svg>
+        </span>
+      ))}
+      {children}
+    </span>
+  )
 }
 
 const agents = [
@@ -87,74 +124,6 @@ const agentDetails = [
   { name: 'Antigravity', path: '~/.antigravity/', status: 'beta' as const },
 ]
 
-const features = [
-  {
-    gradient: 'from-violet-600/20 to-purple-700/10',
-    iconColor: 'text-violet-400',
-    glowColor: 'rgba(139,92,246,0.12)',
-    accentColor: 'rgba(139,92,246,0.08)',
-    span: 'lg:col-span-2',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    ),
-    title: 'Unified view',
-    description:
-      'See every skill installed across all your agents in one place. No more hunting through config directories.',
-  },
-  {
-    gradient: 'from-blue-600/20 to-cyan-600/10',
-    iconColor: 'text-blue-400',
-    glowColor: 'rgba(96,165,250,0.12)',
-    accentColor: 'rgba(96,165,250,0.06)',
-    span: '',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <path d="M10 3v10M10 13l-3-3M10 13l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3 16h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-    title: 'Install from GitHub',
-    description:
-      'Paste any GitHub repo URL and install skills with one click. Works with public repos and custom registries.',
-  },
-  {
-    gradient: 'from-cyan-600/20 to-teal-600/10',
-    iconColor: 'text-cyan-400',
-    glowColor: 'rgba(34,211,238,0.1)',
-    accentColor: 'rgba(34,211,238,0.05)',
-    span: '',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M7 10h6M13 10l-2.5-2.5M13 10l-2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    title: 'Copy between agents',
-    description:
-      'Found the perfect skill for Claude Code? Push it to Cursor or Copilot in seconds — no manual file copying.',
-  },
-  {
-    gradient: 'from-fuchsia-600/20 to-pink-600/10',
-    iconColor: 'text-fuchsia-400',
-    glowColor: 'rgba(192,132,252,0.1)',
-    accentColor: 'rgba(192,132,252,0.06)',
-    span: 'lg:col-span-2',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <path d="M4 10h12M10 4v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    ),
-    title: 'Enable / disable',
-    description:
-      'Toggle any skill on or off without deleting it. Experiment freely and roll back without losing your setup.',
-  },
-]
 
 const testimonials = [
   {
@@ -857,8 +826,8 @@ function AgentsGrid() {
     <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-6">
         <ScrollReveal>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center">
-            Full compatibility
+          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center flex items-center justify-center gap-2">
+            <span>⬡</span> Full compatibility
           </p>
           <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-4 tracking-tight">
             Every major AI coding assistant
@@ -924,8 +893,8 @@ function ComparisonTable() {
       />
       <div className="max-w-3xl mx-auto px-6 relative">
         <ScrollReveal>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center">
-            The difference
+          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-4 text-center flex items-center justify-center gap-2">
+            <span>⬡</span> The difference
           </p>
           <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-14 tracking-tight">
             Managing skills <span className="line-through text-slate-600">without</span> Prompt Skill Manager
@@ -964,6 +933,163 @@ function ComparisonTable() {
                 <span className="text-sm text-slate-300 leading-relaxed">{row.with}</span>
               </div>
             </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Tech Stack Pills ──────────────────────────────────────────────────────
+function TechStack() {
+  const pills = [
+    { label: 'React 18',       color: '#67e8f9', bg: 'rgba(6,182,212,0.1)',   border: 'rgba(6,182,212,0.3)'   },
+    { label: 'TypeScript 5',   color: '#93c5fd', bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.3)'  },
+    { label: 'Electron',       color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.3)'  },
+    { label: 'Next.js 14',     color: '#f4f4f5', bg: 'rgba(255,255,255,0.06)',border: 'rgba(255,255,255,0.12)' },
+    { label: 'Tailwind CSS',   color: '#67e8f9', bg: 'rgba(6,182,212,0.1)',   border: 'rgba(6,182,212,0.3)'   },
+    { label: 'Turborepo',      color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)',  border: 'rgba(236,72,153,0.3)'  },
+    { label: 'Vite',           color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.3)'  },
+    { label: 'Framer Motion',  color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)',  border: 'rgba(236,72,153,0.3)'  },
+    { label: 'MIT License',    color: '#86efac', bg: 'rgba(34,197,94,0.1)',   border: 'rgba(34,197,94,0.3)'   },
+    { label: 'Open Source',    color: '#86efac', bg: 'rgba(34,197,94,0.1)',   border: 'rgba(34,197,94,0.3)'   },
+    { label: 'Monorepo',       color: '#fdba74', bg: 'rgba(249,115,22,0.1)',  border: 'rgba(249,115,22,0.3)'  },
+    { label: 'npm workspaces', color: '#fdba74', bg: 'rgba(249,115,22,0.1)',  border: 'rgba(249,115,22,0.3)'  },
+  ]
+
+  return (
+    <section className="border-t border-white/[0.04] py-20 relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(99,102,241,0.04) 0%, transparent 70%)' }}
+      />
+      <div className="max-w-4xl mx-auto px-6 relative">
+        <ScrollReveal>
+          <p
+            className="text-[11px] uppercase tracking-[0.25em] font-semibold mb-4 text-center flex items-center justify-center gap-2"
+            style={{ color: 'rgba(167,139,250,0.6)' }}
+          >
+            <span>⬡</span> Technology
+          </p>
+          <h2 className="font-heading text-[1.6rem] sm:text-[2.1rem] text-center mb-3 tracking-tight">
+            Built with best-in-class tools
+          </h2>
+          <p className="text-center text-sm text-slate-500 mb-10 max-w-sm mx-auto leading-relaxed">
+            Full TypeScript across the monorepo — fast builds, strict types, zero compromise.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={80}>
+          <div className="flex flex-wrap justify-center gap-3">
+            {pills.map((p, i) => (
+              <motion.span
+                key={p.label}
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                className="tech-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[0.8rem] font-semibold"
+                style={{ color: p.color, background: p.bg, border: `1px solid ${p.border}` }}
+              >
+                {p.label}
+              </motion.span>
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
+
+// ── Platform Download Cards ────────────────────────────────────────────────
+function PlatformCards() {
+  const platforms = [
+    {
+      emoji: '🪟',
+      name: 'Windows',
+      formats: ['.exe', 'NSIS installer', 'x64'],
+      href: 'https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe',
+      available: true,
+      accentColor: 'rgba(59,130,246,0.15)',
+      borderColor: 'rgba(59,130,246,0.25)',
+      formatColor: '#67e8f9',
+      formatBg: 'rgba(6,182,212,0.1)',
+      formatBorder: 'rgba(6,182,212,0.25)',
+    },
+  ]
+
+  return (
+    <section className="border-t border-white/[0.04] py-20 relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%)' }}
+      />
+      <div className="max-w-4xl mx-auto px-6 relative">
+        <ScrollReveal>
+          <p
+            className="text-[11px] uppercase tracking-[0.25em] font-semibold mb-4 text-center flex items-center justify-center gap-2"
+            style={{ color: 'rgba(167,139,250,0.6)' }}
+          >
+            <span>⬡</span> Available on
+          </p>
+          <h2 className="font-heading text-[1.6rem] sm:text-[2.1rem] text-center mb-3 tracking-tight">
+            Built for Windows
+          </h2>
+          <p className="text-center text-sm text-slate-500 mb-10 max-w-sm mx-auto leading-relaxed">
+            Native desktop installer. Download and run in 60 seconds.
+          </p>
+        </ScrollReveal>
+
+        <div className="flex justify-center">
+          {platforms.map((p, i) => (
+            <ScrollReveal key={p.name} delay={i * 80}>
+              <motion.div
+                whileHover={p.available ? { y: -5 } : {}}
+                transition={{ duration: 0.2 }}
+                className="group rounded-2xl p-8 relative overflow-hidden cursor-default w-72"
+                style={{
+                  background: p.accentColor,
+                  border: `1px solid ${p.borderColor}`,
+                  opacity: p.available ? 1 : 0.6,
+                  transition: 'border-color 0.3s, box-shadow 0.3s',
+                }}
+              >
+                {/* Spotlight */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: `radial-gradient(ellipse at top left, ${p.accentColor.replace('0.1', '0.35').replace('0.12', '0.4')}, transparent 70%)` }}
+                />
+                <span className="emoji-pop text-4xl mb-3 block relative z-10">{p.emoji}</span>
+                <p className="font-bold text-white text-base mb-4 relative z-10">{p.name}</p>
+                <div className="flex flex-wrap gap-1.5 mb-5 relative z-10">
+                  {p.formats.map((fmt) => (
+                    <span
+                      key={fmt}
+                      className="font-mono text-[0.72rem] px-2 py-0.5 rounded-md"
+                      style={{ color: p.formatColor, background: p.formatBg, border: `1px solid ${p.formatBorder}` }}
+                    >
+                      {fmt}
+                    </span>
+                  ))}
+                </div>
+                {p.available ? (
+                  <a
+                    href={p.href!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative z-10 inline-flex items-center gap-1.5 text-xs font-semibold transition-all hover:text-white hover:gap-2.5"
+                    style={{ color: p.formatColor }}
+                  >
+                    Download
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M2 8L8 2M8 2H3M8 2v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </a>
+                ) : (
+                  <span className="relative z-10 text-xs text-slate-600 font-medium">Waitlist open</span>
+                )}
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -1147,20 +1273,26 @@ export default function Home() {
               href="https://github.com/zunalabs/prompt-skill-manager/releases"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold transition-all hover:scale-105"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold transition-all hover:scale-105 hover:border-emerald-500/30"
               style={{ background: 'rgba(30,30,50,0.8)', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8' }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
+              {/* Pulsing live dot */}
+              <span className="relative flex-shrink-0 w-1.5 h-1.5">
+                <span className="pulse-ring" style={{ background: 'rgba(52,211,153,0.5)' }} />
+                <span className="pulse-ring pulse-ring-2" style={{ background: 'rgba(52,211,153,0.3)' }} />
+                <span className="relative w-1.5 h-1.5 rounded-full bg-emerald-400 block" />
+              </span>
               v1.0 released — What&apos;s new →
             </a>
             <span
               className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-300"
               style={{ background: 'rgba(88,28,135,0.25)', border: '1px solid rgba(139,92,246,0.35)' }}
             >
-              <span
-                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                style={{ background: '#a78bfa', boxShadow: '0 0 6px #a78bfa' }}
-              />
+              <span className="relative flex-shrink-0 w-1.5 h-1.5">
+                <span className="pulse-ring" style={{ background: 'rgba(167,139,250,0.5)' }} />
+                <span className="pulse-ring pulse-ring-3" style={{ background: 'rgba(167,139,250,0.3)' }} />
+                <span className="relative w-1.5 h-1.5 rounded-full block" style={{ background: '#a78bfa', boxShadow: '0 0 6px #a78bfa' }} />
+              </span>
               Project Deep Dive · 2026{downloads != null && ` · ${downloads.toLocaleString()} downloads`}
             </span>
           </motion.div>
@@ -1171,18 +1303,20 @@ export default function Home() {
             style={{ fontSize: 'clamp(2.6rem, 7vw, 5.5rem)' }}
             {...fadeUp(0.06)}
           >
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #a78bfa 0%, #60a5fa 55%, #67e8f9 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Prompt Skill Manager
-            </span>
+            <Sparkles>
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #a78bfa 0%, #60a5fa 55%, #67e8f9 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Prompt Skill Manager
+              </span>
+            </Sparkles>
             <br />
-            <span className="text-white">Universal AI Agent Hub</span>
+            <Sparkles><span className="text-shimmer-flow">Universal AI Agent Hub</span></Sparkles>
           </motion.h1>
 
           {/* Subtext */}
@@ -1216,7 +1350,7 @@ export default function Home() {
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center gap-1">
                 <span
-                  className="font-extrabold leading-none tabular-nums"
+                  className="stat-glow-drop font-extrabold leading-none tabular-nums"
                   style={{
                     fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
                     background: 'linear-gradient(135deg, #818cf8 0%, #60a5fa 100%)',
@@ -1246,44 +1380,21 @@ export default function Home() {
                 </div>
               )}
               <Magnetic>
-                <ElectricBorder color={detectedOS === 'windows' ? '#34d399' : '#a78bfa'} speed={0.8} chaos={0.1} borderRadius={16}>
+                <div className={detectedOS === 'windows' ? 'btn-gradient-border-green' : 'btn-gradient-border'}>
                   <a
                     href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
+                    className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-[14px] text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
                     style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)' }}
                   >
                     <WindowsIcon />
                     Download for Windows
                   </a>
-                </ElectricBorder>
-              </Magnetic>
-            </div>
-
-            {/* Linux */}
-            <div className="relative">
-              {detectedOS === 'linux' && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-emerald-400">
-                  ★ Recommended for you
                 </div>
-              )}
-              <Magnetic>
-                <a
-                  href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06] ${detectedOS === 'linux' ? 'border-emerald-500/40' : 'border-white/[0.08] hover:border-violet-400/40'}`}
-                  style={{ background: 'rgba(255,255,255,0.03)' }}
-                >
-                  <Image src="/linux.svg" alt="Linux" width={15} height={15} />
-                  Download for Linux
-                </a>
               </Magnetic>
             </div>
 
-            {/* Mac — waitlist */}
-            <MacWaitlist />
           </motion.div>
 
 
@@ -1312,14 +1423,10 @@ export default function Home() {
               className="pointer-events-none absolute -inset-6 rounded-3xl"
               style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 100%, rgba(139,92,246,0.3), transparent 65%)' }}
             />
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity }}
-              className="relative"
-            >
-              <ElectricBorder color="#7c3aed" speed={0.5} chaos={0.07} borderRadius={18} style={{ display: 'block', width: '100%' }}>
+            <div className="animate-float-tilt relative">
+              <div className="screenshot-gradient-border">
                 <div
-                  className="relative rounded-2xl overflow-hidden"
+                  className="relative rounded-[18px] overflow-hidden"
                   style={{ background: '#0d0d18', boxShadow: '0 40px 100px rgba(0,0,0,0.9)' }}
                 >
                   {/* Window chrome */}
@@ -1352,8 +1459,8 @@ export default function Home() {
                     style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.5), transparent)' }}
                   />
                 </div>
-              </ElectricBorder>
-            </motion.div>
+              </div>
+            </div>
           </motion.div>
 
         </div>
@@ -1394,8 +1501,8 @@ export default function Home() {
                   className="flex flex-col items-center gap-2.5 px-5 shrink-0 group"
                 >
                   <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center border border-violet-500/10 group-hover:border-violet-500/30 transition-all duration-300 group-hover:scale-110"
-                    style={{ background: 'rgba(139,92,246,0.06)' }}
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center border border-violet-500/10 group-hover:border-violet-500/40 transition-all duration-300 group-hover:scale-125 group-hover:rotate-6"
+                    style={{ background: 'rgba(139,92,246,0.06)', transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s' }}
                   >
                     <AgentIcon agent={agent} size={26} />
                   </div>
@@ -1466,8 +1573,8 @@ export default function Home() {
         />
         <div className="max-w-5xl mx-auto px-6 relative">
           <ScrollReveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.25em] mb-4" style={{ color: '#7c3aed' }}>
-              What it does
+            <p className="text-[11px] font-bold uppercase tracking-[0.25em] mb-4 flex items-center gap-2" style={{ color: '#7c3aed' }}>
+              <span>⬡</span> What it does
             </p>
             <h2 className="font-heading text-[1.75rem] sm:text-[2.5rem] mb-4 tracking-tight">
               One App to Rule All Skills
@@ -1550,29 +1657,32 @@ export default function Home() {
               },
             ].map((f, i) => (
               <ScrollReveal key={f.title} delay={i * 70}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.2 }}
-                  className="group rounded-2xl p-6 h-full cursor-default"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.07)',
-                  }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300"
-                    style={{ background: f.iconBg }}
+                <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }} className="h-full">
+                  <MouseSpotCard
+                    className="feature-card group rounded-2xl p-6 h-full cursor-default"
+                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
                   >
-                    {f.icon}
-                  </div>
-                  <h3 className="text-[15px] font-bold text-white mb-2.5">{f.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors duration-200">{f.desc}</p>
+                    <div
+                      className="relative z-10 w-14 h-14 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300"
+                      style={{ background: f.iconBg }}
+                    >
+                      {f.icon}
+                    </div>
+                    <h3 className="relative z-10 text-[15px] font-bold text-white mb-2.5">{f.title}</h3>
+                    <p className="relative z-10 text-sm text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors duration-200">{f.desc}</p>
+                  </MouseSpotCard>
                 </motion.div>
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
+
+      {/* ── Tech Stack ── */}
+      <TechStack />
+
+      {/* ── Platform Download Cards ── */}
+      <PlatformCards />
 
       {/* ── Comparison Table ── */}
       <ComparisonTable />
@@ -1902,7 +2012,7 @@ export default function Home() {
             <h2 className="font-heading text-[2rem] sm:text-[2.75rem] md:text-[3.5rem] mb-6 tracking-tight leading-tight">
               Take control of your
               <br />
-              <span className="text-gradient-bright animate-gradient">AI skills.</span>
+              <Sparkles><span className="text-gradient-bright animate-gradient">AI skills.</span></Sparkles>
             </h2>
             <p className="text-sm text-slate-500 mb-12 max-w-sm mx-auto">
               Free and open source. Windows and Linux available now. Mac coming soon.
@@ -1911,33 +2021,19 @@ export default function Home() {
 
           <ScrollReveal delay={100}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
-              <ElectricBorder color="#a78bfa" speed={0.8} chaos={0.1} borderRadius={16}>
+              <div className="animate-glow-strong btn-gradient-border">
                 <a
                   href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
-                  style={{
-                    background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)',
-                  }}
+                  className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-[14px] text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
+                  style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 40%, #6366f1 100%)' }}
                 >
                   <WindowsIcon />
                   Download for Windows
                 </a>
-              </ElectricBorder>
+              </div>
 
-              <a
-                href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-linux-x86_64.AppImage"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-sm font-medium text-slate-300 hover:text-white border border-white/[0.08] hover:border-violet-400/40 px-7 py-4 rounded-2xl transition-all duration-200 hover:bg-violet-500/[0.06]"
-                style={{ background: 'rgba(255,255,255,0.03)' }}
-              >
-                <Image src="/linux.svg" alt="Linux" width={15} height={15} />
-                Download for Linux
-              </a>
-
-              <MacWaitlist />
             </div>
 
             <p className="text-[11px] text-slate-700">
