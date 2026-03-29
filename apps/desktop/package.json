@@ -21,6 +21,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "electron-updater": "^6.8.3",
     "js-yaml": "^4.1.0",
     "lucide-react": "^0.294.0",
     "react": "^18.2.0",
@@ -88,7 +89,10 @@
             "x64"
           ]
         }
-      ]
+      ],
+      "certificateFile": "${env.WIN_CSC_LINK}",
+      "certificatePassword": "${env.WIN_CSC_KEY_PASSWORD}",
+      "signingHashAlgorithms": ["sha256"]
     },
     "nsis": {
       "oneClick": true,

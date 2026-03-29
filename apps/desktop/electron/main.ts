@@ -1,9 +1,18 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { autoUpdater } from 'electron-updater'
 import path from 'path'
 import fs from 'fs'
 import os from 'os'
 import yaml from 'js-yaml'
 import https from 'https'
+
+// ── Crash handlers ────────────────────────────────────────────────────────────
+process.on('uncaughtException', (err) => {
+  console.error('[uncaughtException]', err)
+})
+process.on('unhandledRejection', (reason) => {
+  console.error('[unhandledRejection]', reason)
+})
 
 const home = os.homedir()
 
@@ -252,7 +261,12 @@ function listTemplates(skillPath: string): string[] {
 }
 
 function readTemplate(skillPath: string, templateName: string): string {
+  // Guard against path traversal in templateName
+  if (templateName.includes('..') || path.isAbsolute(templateName)) return ''
   const templateFile = path.join(skillPath, 'templates', templateName)
+  // Ensure resolved path stays within the templates directory
+  const templatesDir = path.resolve(skillPath, 'templates')
+  if (!path.resolve(templateFile).startsWith(templatesDir + path.sep)) return ''
   if (!fs.existsSync(templateFile)) return ''
   try {
     return fs.readFileSync(templateFile, 'utf-8')
@@ -370,8 +384,24 @@ function httpsGet(url: string, cb: (data: string) => void, errCb: (e: string) =>
   }
   if (token) headers['Authorization'] = `Bearer ${token}`
   https.get(url, { headers }, (res) => {
-    if (res.statusCode === 302 || res.statusCode === 301) {
+    if (res.statusCode === 301 || res.statusCode === 302) {
       httpsGet(res.headers.location!, cb, errCb)
+      return
+    }
+    if (res.statusCode === 429) {
+      errCb('GitHub API rate limit exceeded. Set a GitHub token to increase your limit.')
+      return
+    }
+    if (res.statusCode === 401 || res.statusCode === 403) {
+      errCb(`GitHub API access denied (HTTP ${res.statusCode}). Check your GitHub token.`)
+      return
+    }
+    if (res.statusCode === 404) {
+      errCb('Repository or resource not found (HTTP 404). Check the URL.')
+      return
+    }
+    if (res.statusCode && res.statusCode >= 400) {
+      errCb(`GitHub API error: HTTP ${res.statusCode}`)
       return
     }
     let data = ''
@@ -564,6 +594,13 @@ ipcMain.handle('skills:openInExplorer', (_e, skillPath: string) => {
 })
 
 ipcMain.handle('skills:openExternal', (_e, url: string) => {
+  // Only allow http/https URLs to prevent protocol abuse
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return
+  } catch {
+    return
+  }
   shell.openExternal(url)
 })
 
@@ -621,7 +658,17 @@ ipcMain.handle('profile:set', (_e, data: Profile) => {
   writeProfile(data)
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  // Check for updates after window is ready (production builds only)
+  if (!process.env.VITE_DEV_SERVER_URL) {
+    try {
+      autoUpdater.checkForUpdatesAndNotify()
+    } catch (e) {
+      console.error('[autoUpdater]', e)
+    }
+  }
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
