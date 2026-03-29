@@ -6,6 +6,7 @@ import Header from './components/Header'
 import InstallModal from './components/InstallModal'
 import Marketplace from './components/Marketplace'
 import PromptsView from './components/PromptsView'
+import DailyPlannerView from './components/DailyPlannerView'
 import AboutView from './components/AboutView'
 import { ToolIcon } from './components/ToolIcon'
 
@@ -18,7 +19,7 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState<'all' | 'enabled' | 'disabled'>('all')
   const [showInstallModal, setShowInstallModal] = useState(false)
   const [installRepo, setInstallRepo] = useState<string | undefined>(undefined)
-  const [view, setView] = useState<'skills' | 'discover' | 'prompts' | 'about'>('skills')
+  const [view, setView] = useState<'skills' | 'discover' | 'prompts' | 'planner' | 'about'>('skills')
 
   const loadSkills = useCallback(async () => {
     setLoading(true)
@@ -120,6 +121,8 @@ export default function App() {
         </div>
       ) : view === 'prompts' ? (
         <PromptsView />
+      ) : view === 'planner' ? (
+        <DailyPlannerView />
       ) : (
         <div className="flex flex-1 overflow-hidden p-2 gap-2">
           <Sidebar

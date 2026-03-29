@@ -78,7 +78,7 @@ export default function Header({
 
           {/* View toggle */}
           <div className="flex items-center bg-zinc-900/70 border border-zinc-800/80 rounded-lg p-0.5 flex-shrink-0">
-            {(['skills', 'discover', 'prompts', 'about'] as const).map((v) => (
+            {(['skills', 'discover', 'prompts', 'planner', 'about'] as const).map((v) => (
               <button
                 key={v}
                 onClick={() => onViewChange(v)}
@@ -88,7 +88,7 @@ export default function Header({
                     : 'text-zinc-500 hover:text-zinc-300'
                 }`}
               >
-                {v === 'discover' ? '✦ Discover' : v === 'prompts' ? '✎ Prompts' : v === 'about' ? '· About' : v}
+                {v === 'discover' ? '✦ Discover' : v === 'prompts' ? '✎ Prompts' : v === 'planner' ? '📅 Planner' : v === 'about' ? '· About' : v}
               </button>
             ))}
           </div>
