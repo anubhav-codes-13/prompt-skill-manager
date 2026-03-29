@@ -7,7 +7,7 @@ import ScrollReveal from './ScrollReveal'
 import { ShootingStars } from './ShootingStars'
 import { motion, useInView, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import FloatingParticles from './FloatingParticles'
+import ThreeScene from './ThreeScene'
 import Magnetic from './Magnetic'
 
 const fadeUp = (delay = 0) => ({
@@ -1258,8 +1258,8 @@ export default function Home() {
             background: `radial-gradient(700px circle at ${cursor.x}px ${cursor.y}px, rgba(139,92,246,0.07), transparent 40%)`,
           }}
         />
-        {/* 3D Particles Background */}
-        <FloatingParticles />
+        {/* Three.js 3D galaxy */}
+        <ThreeScene />
 
         <ShootingStars minDelay={800} maxDelay={3000} starWidth={14} />
 
