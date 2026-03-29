@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Desktop app for managing AI agent prompt skills",
   "author": {
-    "name": "Zunalabs",
+    "name": "Anubhav",
     "email": "hello@zunalabs.com"
   },
   "homepage": "https://sm.idoevergreen.me",
@@ -52,7 +52,7 @@
   "build": {
     "appId": "com.zunalabs.productivity-boost",
     "productName": "Productivity Boost",
-    "copyright": "Copyright © 2025 Zunalabs",
+    "copyright": "Copyright © 2025 Anubhav",
     "icon": "build/icon.png",
     "directories": {
       "output": "release"
@@ -116,7 +116,7 @@
       ],
       "category": "Development",
       "artifactName": "Productivity-Boost-linux-${arch}.${ext}",
-      "maintainer": "Zunalabs <hello@zunalabs.com>"
+      "maintainer": "Anubhav <hello@zunalabs.com>"
     },
     "publish": {
       "provider": "github",

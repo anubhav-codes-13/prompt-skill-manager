@@ -252,6 +252,8 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
     { label: 'What is it?', href: '#what-is-it' },
     { label: 'Features', href: '#features' },
     { label: 'Demo', href: '#demo' },
+    { label: 'Planner', href: '#daily-planner' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Download', href: '#cta' },
     {
       label: 'GitHub',
@@ -288,7 +290,7 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          {links.slice(0, 4).map((l) => (
+          {links.slice(0, 6).map((l) => (
             <a
               key={l.label}
               href={l.href}
@@ -1146,7 +1148,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const sectionIds = ['what-is-it', 'features', 'demo', 'cta']
+    const sectionIds = ['what-is-it', 'features', 'daily-planner', 'demo', 'faq', 'cta']
     const observers: IntersectionObserver[] = []
     sectionIds.forEach((id) => {
       const el = document.getElementById(id)
@@ -1684,17 +1686,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Tech Stack ── */}
-      <TechStack />
-
-      {/* ── Platform Download Cards ── */}
-      <PlatformCards />
-
-      {/* ── Comparison Table ── */}
-      <ComparisonTable />
-
       {/* ── Daily Planner ── */}
-      <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+      <section id="daily-planner" className="border-t border-white/[0.04] py-24 relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute top-0 right-0 w-[600px] h-[500px] rounded-full blur-[130px]"
             style={{ background: 'radial-gradient(ellipse, rgba(139,92,246,0.07) 0%, transparent 70%)' }} />
@@ -1817,6 +1810,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Tech Stack ── */}
+      <TechStack />
+
+      {/* ── Platform Download Cards ── */}
+      <PlatformCards />
+
+      {/* ── Comparison Table ── */}
+      <ComparisonTable />
 
       {/* ── Prompt Library ── */}
       <section className="border-t border-white/[0.04] py-28 relative overflow-hidden">
@@ -2100,7 +2102,7 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+      <section id="faq" className="border-t border-white/[0.04] py-24 relative overflow-hidden">
         {/* Background glow blobs */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[120px]"
@@ -2235,7 +2237,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="hover:text-violet-400 transition-colors"
               >
-                Zunalabs
+                Anubhav
               </a>
             </span>
           </div>

@@ -112,8 +112,7 @@ export default function AboutView() {
 
           {/* License */}
           <p className="text-center text-[11px] text-zinc-700">
-            Open source under the MIT License · © 2025 Zunalabs
-          </p>
+            Open source under the MIT License · © 2026 ANUBHAV          </p>
 
         </div>
       </div>
