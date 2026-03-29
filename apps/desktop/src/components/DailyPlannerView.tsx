@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { RefreshCw } from 'lucide-react'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -85,6 +85,49 @@ function saveForDate(date: string, data: PlannerData) {
   try { localStorage.setItem(storageKey(date), JSON.stringify(data)) } catch { /* ignore */ }
 }
 
+// ── Export all planner entries as JSON file ────────────────────────────────────
+function exportAllData() {
+  const allEntries: Record<string, PlannerData> = {}
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key && key.startsWith('daily-planner-')) {
+      try {
+        const date = key.replace('daily-planner-', '')
+        allEntries[date] = JSON.parse(localStorage.getItem(key)!)
+      } catch { /* skip corrupted */ }
+    }
+  }
+  const blob = new Blob([JSON.stringify(allEntries, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `planner-backup-${new Date().toISOString().split('T')[0]}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+// ── Import planner entries from JSON file ─────────────────────────────────────
+function importData(file: File, onDone: () => void) {
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target?.result as string)
+      let count = 0
+      for (const [date, data] of Object.entries(parsed)) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+          localStorage.setItem(storageKey(date), JSON.stringify(data))
+          count++
+        }
+      }
+      alert(`✓ Imported ${count} day${count !== 1 ? 's' : ''} of planner data.`)
+      onDone()
+    } catch {
+      alert('Failed to import — make sure the file is a valid planner backup.')
+    }
+  }
+  reader.readAsText(file)
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function todayISO() { return new Date().toISOString().split('T')[0] }
 
@@ -106,6 +149,7 @@ export default function DailyPlannerView() {
   const [data, setData] = useState<PlannerData>(() => loadForDate(todayISO()))
   const [quote, setQuote] = useState(() => QUOTES[Math.floor(Math.random() * QUOTES.length)])
   const [saved, setSaved] = useState(false)
+  const importRef = useRef<HTMLInputElement>(null)
 
   const handleSave = useCallback(() => {
     saveForDate(date, data)
@@ -143,6 +187,19 @@ export default function DailyPlannerView() {
         <div className="max-w-5xl mx-auto p-6 space-y-6">
 
           {/* ── Header ─────────────────────────────────────────────────────── */}
+          {/* Hidden file input for import */}
+          <input
+            ref={importRef}
+            type="file"
+            accept=".json"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              if (file) importData(file, () => setData(loadForDate(date)))
+              e.target.value = ''
+            }}
+          />
+
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-lg font-semibold text-zinc-100 tracking-tight">Daily Planner</h1>
@@ -152,6 +209,22 @@ export default function DailyPlannerView() {
               {saved && (
                 <span className="text-[11px] text-emerald-500 transition-opacity">✓ Saved</span>
               )}
+              {/* Export */}
+              <button
+                onClick={exportAllData}
+                title="Export all planner data as JSON"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 hover:bg-zinc-800 text-zinc-300 text-xs font-medium transition-colors"
+              >
+                ⬆ Export
+              </button>
+              {/* Import */}
+              <button
+                onClick={() => importRef.current?.click()}
+                title="Import planner data from JSON backup"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 hover:bg-zinc-800 text-zinc-300 text-xs font-medium transition-colors"
+              >
+                ⬇ Import
+              </button>
               <button
                 onClick={handleSave}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-medium transition-colors"
