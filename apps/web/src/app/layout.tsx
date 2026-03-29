@@ -12,39 +12,66 @@ const instrumentSerif = Instrument_Serif({
   variable: '--font-heading',
 })
 
+const BASE_URL = 'https://sm.idoevergreen.me'
+const OG_IMAGE = `${BASE_URL}/productivity-boost-1.0.jpg`
+const TITLE = 'Productivity Boost — Universal AI Agent Skills Hub'
+const DESCRIPTION =
+  'Manage, install, and sync AI agent skills across Claude Code, Cursor, GitHub Copilot, Windsurf, Gemini CLI, and more — in one free desktop app for Windows.'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sm.idoevergreen.me'),
-  title: 'Prompt Skill Manager — Universal AI Agent Skills',
-  description:
-    'Browse, install, enable, and share AI agent skills across all major coding agents in one desktop app.',
-  alternates: {
-    canonical: '/',
+  metadataBase: new URL(BASE_URL),
+
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: [
+    'AI agent skills', 'prompt manager', 'Claude Code skills', 'Cursor rules',
+    'GitHub Copilot instructions', 'Windsurf skills', 'Gemini CLI', 'AI coding agent',
+    'productivity boost', 'AI skills manager', 'coding agent tools', 'developer tools',
+  ],
+  authors: [{ name: 'Zunalabs', url: BASE_URL }],
+  creator: 'Zunalabs',
+  publisher: 'Zunalabs',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
+  alternates: { canonical: '/' },
+
   icons: {
-    icon: '/prompt-skill-manger-1.0.jpg',
-    apple: '/prompt-skill-manger-1.0.jpg',
+    icon: '/productivity-boost-1.0.jpg',
+    apple: '/productivity-boost-1.0.jpg',
+    shortcut: '/productivity-boost-1.0.jpg',
   },
+
+  // ── Open Graph (Facebook, WhatsApp, LinkedIn, Instagram) ──────────────────
   openGraph: {
-    title: 'Prompt Skill Manager — Universal AI Agent Skills',
-    description: 'Universal AI agent skills manager for Claude Code, Cursor, Copilot, and more.',
-    url: 'https://sm.idoevergreen.me',
-    siteName: 'Prompt Skill Manager',
+    title: TITLE,
+    description: DESCRIPTION,
+    url: BASE_URL,
+    siteName: 'Productivity Boost',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: '/opengraph-image',
+        url: OG_IMAGE,
+        secureUrl: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Prompt Skill Manager — One place for all your AI skills',
+        alt: 'Productivity Boost — One place for all your AI agent skills',
+        type: 'image/jpeg',
       },
     ],
   },
+
+  // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
-    title: 'Prompt Skill Manager — Universal AI Agent Skills',
-    description: 'Universal AI agent skills manager for Claude Code, Cursor, Copilot, and more.',
-    images: ['/opengraph-image'],
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
+    creator: '@zunalabs',
+    site: '@zunalabs',
   },
 }
 

@@ -70,7 +70,7 @@ export function SettingsTrigger() {
   if (!mounted) {
     return (
       <div className="w-7 h-7 rounded-full overflow-hidden border border-white/10 flex-shrink-0">
-        <Image src="/prompt-skill-manger-1.0.jpg" alt="Profile" width={28} height={28} className="w-full h-full object-cover" />
+        <Image src="/productivity-boost-1.0.jpg" alt="Profile" width={28} height={28} className="w-full h-full object-cover" />
       </div>
     )
   }
@@ -86,7 +86,7 @@ export function SettingsTrigger() {
           {settings.image ? (
             <img src={settings.image} alt="Profile" className="w-full h-full object-cover" />
           ) : (
-            <Image src="/prompt-skill-manger-1.0.jpg" alt="Prompt Skill Manager" width={28} height={28} className="w-full h-full object-cover" />
+            <Image src="/productivity-boost-1.0.jpg" alt="Productivity Boost" width={28} height={28} className="w-full h-full object-cover" />
           )}
         </div>
         {settings.name && (

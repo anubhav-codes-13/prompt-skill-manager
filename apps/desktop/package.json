@@ -1,5 +1,5 @@
 {
-  "name": "prompt-skill-manager",
+  "name": "productivity-boost",
   "version": "0.1.0",
   "description": "Desktop app for managing AI agent prompt skills",
   "author": {
@@ -50,8 +50,8 @@
     "wait-on": "^7.2.0"
   },
   "build": {
-    "appId": "com.zunalabs.prompt-skill-manager",
-    "productName": "Prompt Skill Manager",
+    "appId": "com.zunalabs.productivity-boost",
+    "productName": "Productivity Boost",
     "copyright": "Copyright © 2025 Zunalabs",
     "icon": "build/icon.png",
     "directories": {
@@ -79,7 +79,7 @@
       ]
     },
     "dmg": {
-      "title": "Prompt Skill Manager"
+      "title": "Productivity Boost"
     },
     "win": {
       "target": [
@@ -97,7 +97,7 @@
     "nsis": {
       "oneClick": true,
       "perMachine": false,
-      "artifactName": "Prompt-Skill-Manager-Setup.exe"
+      "artifactName": "Productivity-Boost-Setup.exe"
     },
     "linux": {
       "target": [
@@ -115,13 +115,13 @@
         }
       ],
       "category": "Development",
-      "artifactName": "Prompt-Skill-Manager-linux-${arch}.${ext}",
+      "artifactName": "Productivity-Boost-linux-${arch}.${ext}",
       "maintainer": "Zunalabs <hello@zunalabs.com>"
     },
     "publish": {
       "provider": "github",
       "owner": "zunalabs",
-      "repo": "prompt-skill-manager"
+      "repo": "productivity-boost"
     }
   }
 }

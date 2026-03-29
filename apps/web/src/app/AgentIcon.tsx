@@ -12,7 +12,7 @@ export function AgentIcon({ agent, size = 24 }: { agent: string; size?: number }
   if (agent === 'Windsurf') return <WindsurfIcon size={size} />
   if (agent === 'Trae') return <TraeIcon size={size} />
   if (agent === 'OpenAI Codex') return <Image src="/codex.png" width={size} height={size} style={{ objectFit: 'contain' }} alt="OpenAI Codex" />
-  return <Image src="/prompt-skill-manger-1.0.jpg" width={size} height={size} style={{ objectFit: 'cover', borderRadius: 4 }} alt={agent} />
+  return <Image src="/productivity-boost-1.0.jpg" width={size} height={size} style={{ objectFit: 'cover', borderRadius: 4 }} alt={agent} />
 }
 
 function ClaudeCodeIcon({ size }: { size: number }) {

@@ -21,11 +21,11 @@ const items = [
   },
   {
     q: 'What inspired this?',
-    a: "The AI coding agent space exploded fast. Within months there were a dozen agents, each with their own way of storing and loading skills. Moving between agents meant re-doing all your configuration from scratch, and discovering good community-built skills meant digging through GitHub manually. Prompt Skill Manager was built to fix that friction — one app that speaks every agent's language, so your knowledge travels with you no matter which tool you're using that day.",
+    a: "The AI coding agent space exploded fast. Within months there were a dozen agents, each with their own way of storing and loading skills. Moving between agents meant re-doing all your configuration from scratch, and discovering good community-built skills meant digging through GitHub manually. Productivity Boost was built to fix that friction — one app that speaks every agent's language, so your knowledge travels with you no matter which tool you're using that day.",
   },
   {
     q: 'Is it free?',
-    a: 'Yes. Prompt Skill Manager is fully open source under the MIT license. No accounts, no telemetry, no paywalls — ever.',
+    a: 'Yes. Productivity Boost is fully open source under the MIT license. No accounts, no telemetry, no paywalls — ever.',
   },
   {
     q: 'Which agents are supported?',
@@ -39,7 +39,7 @@ const items = [
     q: 'Where are my skills stored?',
     a: (
       <>
-        Skills stay exactly where each agent expects them — Prompt Skill Manager reads and writes
+        Skills stay exactly where each agent expects them — Productivity Boost reads and writes
         directly to the native directories (e.g.{' '}
         <span className="text-white font-mono text-xs border border-[rgba(255,255,255,0.12)] rounded px-1.5 py-0.5">
           ~/.claude/commands/
@@ -75,7 +75,7 @@ const items = [
       <>
         Open an issue or pull request on the{' '}
         <a
-          href="https://github.com/zunalabs/prompt-skill-manager"
+          href="https://github.com/zunalabs/productivity-boost"
           target="_blank"
           rel="noopener noreferrer"
           className="text-violet-400 underline hover:text-violet-300 transition-colors"

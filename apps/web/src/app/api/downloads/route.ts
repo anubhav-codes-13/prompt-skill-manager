@@ -6,7 +6,7 @@ export async function GET() {
     if (process.env.GITHUB_TOKEN) headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`
 
     const res = await fetch(
-      'https://api.github.com/repos/zunalabs/prompt-skill-manager/releases',
+      'https://api.github.com/repos/zunalabs/productivity-boost/releases',
       { headers, next: { revalidate: 3600 } }
     )
     if (!res.ok) return Response.json({ total: null })

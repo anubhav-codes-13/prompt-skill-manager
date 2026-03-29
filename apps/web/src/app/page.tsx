@@ -255,7 +255,7 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
     { label: 'Download', href: '#cta' },
     {
       label: 'GitHub',
-      href: 'https://github.com/zunalabs/prompt-skill-manager',
+      href: 'https://github.com/zunalabs/productivity-boost',
       external: true,
     },
   ]
@@ -275,14 +275,14 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5">
           <Image
-            src="/prompt-skill-manger-1.0.jpg"
-            alt="Prompt Skill Manager"
+            src="/productivity-boost-1.0.jpg"
+            alt="Productivity Boost"
             width={28}
             height={28}
             className="rounded-lg object-cover flex-shrink-0"
           />
           <span className="font-heading text-base tracking-tight text-white">
-            Prompt Skill Manager
+            Productivity Boost
           </span>
         </a>
 
@@ -299,7 +299,7 @@ function MobileNav({ activeSection, stars }: { activeSection: string; stars: num
             </a>
           ))}
           <a
-            href="https://github.com/zunalabs/prompt-skill-manager"
+            href="https://github.com/zunalabs/productivity-boost"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-slate-500 hover:text-violet-400 transition-colors duration-200"
@@ -903,7 +903,7 @@ function ComparisonTable() {
             <span>⬡</span> The difference
           </p>
           <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-14 tracking-tight">
-            Managing skills <span className="line-through text-slate-600">without</span> Prompt Skill Manager
+            Managing skills <span className="line-through text-slate-600">without</span> Productivity Boost
           </h2>
         </ScrollReveal>
 
@@ -1014,7 +1014,7 @@ function PlatformCards() {
       emoji: '🪟',
       name: 'Windows',
       formats: ['.exe', 'NSIS installer', 'x64'],
-      href: 'https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe',
+      href: 'https://github.com/zunalabs/productivity-boost/releases/latest/download/Prompt-Skill-Manager-Setup.exe',
       available: true,
       accentColor: 'rgba(59,130,246,0.15)',
       borderColor: 'rgba(59,130,246,0.25)',
@@ -1175,7 +1175,7 @@ export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    'name': 'Prompt Skill Manager',
+    'name': 'Productivity Boost',
     'operatingSystem': 'macOS, Windows, Linux',
     'applicationCategory': 'DeveloperApplication',
     'description': 'Universal AI agent skills manager for Claude Code, Cursor, Copilot, and more.',
@@ -1216,7 +1216,7 @@ export default function Home() {
         'name': 'Is it free?',
         'acceptedAnswer': {
           '@type': 'Answer',
-          'text': 'Yes. Prompt Skill Manager is fully open source under the MIT license with no accounts or telemetry.'
+          'text': 'Yes. Productivity Boost is fully open source under the MIT license with no accounts or telemetry.'
         }
       }
     ]
@@ -1276,7 +1276,7 @@ export default function Home() {
           <motion.div {...fadeUp(0)} className="flex flex-col items-center gap-3 mb-10">
             {/* Changelog pill */}
             <a
-              href="https://github.com/zunalabs/prompt-skill-manager/releases"
+              href="https://github.com/zunalabs/productivity-boost/releases"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold transition-all hover:scale-105 hover:border-emerald-500/30"
@@ -1318,7 +1318,7 @@ export default function Home() {
                   backgroundClip: 'text',
                 }}
               >
-                Prompt Skill Manager
+                Productivity Boost
               </span>
             </Sparkles>
             <br />
@@ -1388,7 +1388,7 @@ export default function Home() {
               <Magnetic>
                 <div className={detectedOS === 'windows' ? 'btn-gradient-border-green' : 'btn-gradient-border'}>
                   <a
-                    href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
+                    href="https://github.com/zunalabs/productivity-boost/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-[14px] text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
@@ -1408,7 +1408,7 @@ export default function Home() {
           <motion.p className="text-[11px] text-slate-600 mb-16" {...fadeUp(0.46)}>
             Windows may show a SmartScreen warning — click &ldquo;More info&rdquo; → &ldquo;Run anyway&rdquo;.{' '}
             <a
-              href="https://github.com/zunalabs/prompt-skill-manager"
+              href="https://github.com/zunalabs/productivity-boost"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-slate-400 transition-colors"
@@ -1448,13 +1448,13 @@ export default function Home() {
                         className="w-44 h-5 mx-auto rounded-md text-[10px] flex items-center justify-center text-slate-600 border border-white/[0.04]"
                         style={{ background: 'rgba(255,255,255,0.03)' }}
                       >
-                        Prompt Skill Manager
+                        Productivity Boost
                       </div>
                     </div>
                   </div>
                   <Image
-                    src="/prompt-skill-manger-1.0.jpg"
-                    alt="Prompt Skill Manager app screenshot"
+                    src="/productivity-boost-1.0.jpg"
+                    alt="Productivity Boost app screenshot"
                     width={1200}
                     height={780}
                     className="w-full block"
@@ -1554,7 +1554,7 @@ export default function Home() {
               >
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1`}
-                  title="Prompt Skill Manager demo"
+                  title="Productivity Boost demo"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   loading="lazy"
@@ -1586,7 +1586,7 @@ export default function Home() {
               One App to Rule All Skills
             </h2>
             <p className="text-sm text-slate-400 mb-14 max-w-md leading-relaxed">
-              Every AI coding assistant stores skills in its own hidden folder with its own format. Prompt Skill Manager unifies them all into a single, beautiful interface.
+              Every AI coding assistant stores skills in its own hidden folder with its own format. Productivity Boost unifies them all into a single, beautiful interface.
             </p>
           </ScrollReveal>
 
@@ -1719,7 +1719,7 @@ export default function Home() {
               </h2>
 
               <p className="text-sm text-slate-400 leading-relaxed mb-8 max-w-md">
-                Prompt Skill Manager includes a full daily planner — no extra app needed.
+                Productivity Boost includes a full daily planner — no extra app needed.
                 Plan your day, track habits, review your mood, and stay focused,
                 all in one place alongside your AI workflow.
               </p>
@@ -2131,7 +2131,7 @@ export default function Home() {
               <p className="text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
                 Can't find what you're looking for?{' '}
                 <a
-                  href="https://github.com/zunalabs/prompt-skill-manager/issues"
+                  href="https://github.com/zunalabs/productivity-boost/issues"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors"
@@ -2187,7 +2187,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
               <div className="animate-glow-strong btn-gradient-border">
                 <a
-                  href="https://github.com/zunalabs/prompt-skill-manager/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
+                  href="https://github.com/zunalabs/productivity-boost/releases/latest/download/Prompt-Skill-Manager-Setup.exe"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative inline-flex items-center gap-2.5 px-8 py-4 rounded-[14px] text-sm font-bold text-white overflow-hidden btn-shimmer transition-all duration-300 hover:scale-105 hover:brightness-110"
@@ -2203,7 +2203,7 @@ export default function Home() {
             <p className="text-[11px] text-slate-700">
               Windows may show a SmartScreen warning — click &ldquo;More info&rdquo; → &ldquo;Run anyway&rdquo;.{' '}
               <a
-                href="https://github.com/zunalabs/prompt-skill-manager"
+                href="https://github.com/zunalabs/productivity-boost"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-slate-500 transition-colors"
@@ -2220,13 +2220,13 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <Image
-              src="/prompt-skill-manger-1.0.jpg"
+              src="/productivity-boost-1.0.jpg"
               alt=""
               width={24}
               height={24}
               className="rounded-lg object-cover opacity-70"
             />
-            <span className="font-heading text-sm text-slate-400">Prompt Skill Manager</span>
+            <span className="font-heading text-sm text-slate-400">Productivity Boost</span>
             <span className="text-slate-600 text-sm">
               by{' '}
               <a
@@ -2241,7 +2241,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-6">
             <a
-              href="https://github.com/zunalabs/prompt-skill-manager"
+              href="https://github.com/zunalabs/productivity-boost"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-slate-600 hover:text-violet-400 transition-colors"

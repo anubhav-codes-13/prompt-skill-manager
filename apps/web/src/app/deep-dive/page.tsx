@@ -185,7 +185,7 @@ export default function DeepDivePage() {
               backgroundClip: 'text',
             }}
           >
-            Prompt Skill Manager
+            Productivity Boost
           </span>
           <br />
           <span style={{ color: '#ffffff' }}>Universal AI Agent Hub</span>
@@ -272,7 +272,7 @@ function WhatItDoes() {
         </h2>
         <p className="text-slate-400 max-w-md leading-relaxed" style={{ fontSize: '0.95rem' }}>
           Every AI coding assistant stores skills in its own hidden folder with its own format.
-          Prompt Skill Manager unifies them all into a single, beautiful interface.
+          Productivity Boost unifies them all into a single, beautiful interface.
         </p>
       </motion.div>
 

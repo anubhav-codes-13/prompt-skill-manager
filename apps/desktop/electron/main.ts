@@ -310,7 +310,7 @@ function toggleSkill(skillPath: string, enabled: boolean): { ok: boolean; newPat
 let win: BrowserWindow | null = null
 
 function createWindow() {
-  const iconPath = path.join(__dirname, '../public/prompt-skill-manger-1.0.jpg')
+  const iconPath = path.join(__dirname, '../public/productivity-boost-1.0.jpg')
   win = new BrowserWindow({
     width: 1280,
     height: 800,
@@ -379,7 +379,7 @@ function copySkillToAgent(skillPath: string, targetAgent: string): { ok: boolean
 function httpsGet(url: string, cb: (data: string) => void, errCb: (e: string) => void) {
   const token = getGithubToken()
   const headers: Record<string, string> = {
-    'User-Agent': 'prompt-skill-manager',
+    'User-Agent': 'productivity-boost',
     'Accept': 'application/vnd.github.v3+json',
   }
   if (token) headers['Authorization'] = `Bearer ${token}`

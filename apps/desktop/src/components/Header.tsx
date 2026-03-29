@@ -8,8 +8,8 @@ interface Profile {
   imageBase64: string | null
 }
 
-const LANDING_URL = 'https://github.com/zunalabs/prompt-skill-manager#readme'
-const DOCS_URL = 'https://github.com/zunalabs/prompt-skill-manager'
+const LANDING_URL = 'https://github.com/zunalabs/productivity-boost#readme'
+const DOCS_URL = 'https://github.com/zunalabs/productivity-boost'
 
 interface HeaderProps {
   search: string
@@ -66,7 +66,7 @@ export default function Header({
               {profile.imageBase64 ? (
                 <img src={profile.imageBase64} alt="Profile" className="h-full w-full object-cover" />
               ) : (
-                <img src="./prompt-skill-manger-1.0.jpg" alt="Prompt Skill Manager" className="h-full w-full object-cover" />
+                <img src="./productivity-boost-1.0.jpg" alt="Productivity Boost" className="h-full w-full object-cover" />
               )}
             </div>
             {profile.name && (

@@ -1,7 +1,7 @@
 import { Github, Globe, Heart, Zap, Shield, RefreshCw } from 'lucide-react'
 
 const VERSION = '1.0.0'
-const GITHUB_URL = 'https://github.com/zunalabs/prompt-skill-manager'
+const GITHUB_URL = 'https://github.com/zunalabs/productivity-boost'
 const WEBSITE_URL = 'https://sm.idoevergreen.me'
 
 const AGENTS = [
@@ -28,14 +28,14 @@ export default function AboutView() {
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="w-16 h-16 rounded-2xl overflow-hidden border border-zinc-700 shadow-lg shadow-violet-900/20">
               <img
-                src="./prompt-skill-manger-1.0.jpg"
-                alt="Prompt Skill Manager"
+                src="./productivity-boost-1.0.jpg"
+                alt="Productivity Boost"
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
               <h1 className="text-lg font-semibold text-zinc-100 tracking-tight">
-                Prompt Skill Manager
+                Productivity Boost
               </h1>
               <p className="text-xs text-zinc-500 mt-0.5">
                 Version {VERSION} · Windows
