@@ -1,6 +1,62 @@
 import { useState, useEffect, useRef } from 'react'
-import { X, FileText } from 'lucide-react'
+import { X, FileText, ChevronDown, Check } from 'lucide-react'
 import { Prompt, Collection } from '../types'
+
+function CollectionDropdown({
+  collections,
+  value,
+  onChange,
+}: {
+  collections: Collection[]
+  value: string | null
+  onChange: (id: string | null) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const options = [{ id: null, name: 'No collection' }, ...collections.map(c => ({ id: c.id, name: c.name }))]
+  const selected = options.find(o => o.id === value) ?? options[0]
+
+  return (
+    <div ref={ref} className="relative">
+      <label className="text-[11px] font-medium text-zinc-500 uppercase tracking-wide block mb-1.5">
+        Collection
+      </label>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between bg-zinc-800/60 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-200 hover:border-zinc-600 focus:outline-none focus:border-violet-500/50 transition-colors cursor-pointer"
+      >
+        <span className={selected.id === null ? 'text-zinc-400' : 'text-zinc-200'}>{selected.name}</span>
+        <ChevronDown size={13} className={`text-zinc-500 transition-transform duration-150 ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      {open && (
+        <div className="absolute z-50 bottom-full mb-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl overflow-y-auto max-h-48">
+          {options.map(opt => (
+            <button
+              key={String(opt.id)}
+              type="button"
+              onClick={() => { onChange(opt.id); setOpen(false) }}
+              className="w-full flex items-center justify-between px-3 py-2 text-xs hover:bg-zinc-800 transition-colors cursor-pointer"
+            >
+              <span className={opt.id === null ? 'text-zinc-400' : 'text-zinc-200'}>{opt.name}</span>
+              {value === opt.id && <Check size={12} className="text-violet-400 flex-shrink-0" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 interface PromptEditorProps {
   target: Prompt | null
@@ -63,7 +119,7 @@ export default function PromptEditor({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl">
         {/* Header */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-zinc-800">
           <div className="w-7 h-7 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center flex-shrink-0">
@@ -143,21 +199,11 @@ export default function PromptEditor({
 
           {/* Collection */}
           {collections.length > 0 && (
-            <div>
-              <label className="text-[11px] font-medium text-zinc-500 uppercase tracking-wide block mb-1.5">
-                Collection
-              </label>
-              <select
-                value={collectionId ?? ''}
-                onChange={(e) => setCollectionId(e.target.value || null)}
-                className="w-full bg-zinc-800/60 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-violet-500/50 transition-colors cursor-pointer"
-              >
-                <option value="">No collection</option>
-                {collections.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </select>
-            </div>
+            <CollectionDropdown
+              collections={collections}
+              value={collectionId}
+              onChange={setCollectionId}
+            />
           )}
         </div>
 
