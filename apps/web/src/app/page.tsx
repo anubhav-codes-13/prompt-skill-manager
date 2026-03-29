@@ -87,7 +87,7 @@ function Sparkles({ children }: { children: React.ReactNode }) {
           style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, zIndex: 10 }}
         >
           <svg viewBox="0 0 24 24" fill="none" width={s.size} height={s.size}>
-            <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" fill="#c4b5fd"/>
+            <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" fill="#c4b5fd" />
           </svg>
         </span>
       ))}
@@ -184,14 +184,14 @@ const testimonials = [
 
 const WindowsIcon = () => (
   <svg width="15" height="15" viewBox="0 0 88 88" fill="currentColor" aria-hidden>
-    <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.066 41.344-47.318-6.63-.066-34.893z"/>
+    <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.066 41.344-47.318-6.63-.066-34.893z" />
   </svg>
 )
 
 const MacIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M16.65 13.2c-.02-2 1.65-2.96 1.73-3.01-0.94-1.37-2.4-1.56-2.91-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-1.41 2.43-.36 6.03 1 8 .66.97 1.45 2.06 2.48 2.02 1-.04 1.37-.64 2.58-.64 1.21 0 1.55.64 2.6.62 1.08-.02 1.76-0.98 2.41-1.95.76-1.1 1.07-2.17 1.08-2.23-.02-.01-2.07-.79-2.1-3.27Z"/>
-    <path d="M14.92 6.82c.54-.65.9-1.56.8-2.46-.77.03-1.7.51-2.25 1.16-.5.58-.94 1.52-.82 2.41.86.07 1.72-.44 2.27-1.11Z"/>
+    <path d="M16.65 13.2c-.02-2 1.65-2.96 1.73-3.01-0.94-1.37-2.4-1.56-2.91-1.58-1.24-.13-2.42.73-3.05.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-1.41 2.43-.36 6.03 1 8 .66.97 1.45 2.06 2.48 2.02 1-.04 1.37-.64 2.58-.64 1.21 0 1.55.64 2.6.62 1.08-.02 1.76-0.98 2.41-1.95.76-1.1 1.07-2.17 1.08-2.23-.02-.01-2.07-.79-2.1-3.27Z" />
+    <path d="M14.92 6.82c.54-.65.9-1.56.8-2.46-.77.03-1.7.51-2.25 1.16-.5.58-.94 1.52-.82 2.41.86.07 1.72-.44 2.27-1.11Z" />
   </svg>
 )
 
@@ -203,15 +203,15 @@ const GitHubIcon = () => (
 
 const PHIcon = () => (
   <svg width="14" height="14" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="29" cy="29" r="29" fill="#DA552F"/>
-    <path d="M33.138 29.24h-8.284v-8.772h8.284a4.386 4.386 0 1 1 0 8.772m0-14.62H19.006v29.24h5.848v-8.772h8.284c5.652 0 10.234-4.582 10.234-10.234S38.79 14.62 33.138 14.62" fill="#fff"/>
+    <circle cx="29" cy="29" r="29" fill="#DA552F" />
+    <path d="M33.138 29.24h-8.284v-8.772h8.284a4.386 4.386 0 1 1 0 8.772m0-14.62H19.006v29.24h5.848v-8.772h8.284c5.652 0 10.234-4.582 10.234-10.234S38.79 14.62 33.138 14.62" fill="#fff" />
   </svg>
 )
 
 const HNIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="4 4 188 188" width="14">
-    <path d="m4 4h188v188h-188z" fill="#f60"/>
-    <path d="m73.2521756 45.01 22.7478244 47.39130083 22.7478244-47.39130083h19.56569631l-34.32352071 64.48661468v41.49338532h-15.98v-41.49338532l-34.32352071-64.48661468z" fill="#fff"/>
+    <path d="m4 4h188v188h-188z" fill="#f60" />
+    <path d="m73.2521756 45.01 22.7478244 47.39130083 22.7478244-47.39130083h19.56569631l-34.32352071 64.48661468v41.49338532h-15.98v-41.49338532l-34.32352071-64.48661468z" fill="#fff" />
   </svg>
 )
 
@@ -450,13 +450,13 @@ function WhatIsIt() {
                 >
                   {t === 'skills' ? (
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden>
-                      <path d="M7 0L3.5 7h3.5L5.5 14 13 7H9L7 0z"/>
+                      <path d="M7 0L3.5 7h3.5L5.5 14 13 7H9L7 0z" />
                     </svg>
                   ) : (
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                      <rect x="1" y="3" width="8" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-                      <path d="M3 6.5h4M3 9h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                      <path d="M5 3V2a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4"/>
+                      <rect x="1" y="3" width="8" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+                      <path d="M3 6.5h4M3 9h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      <path d="M5 3V2a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4" />
                     </svg>
                   )}
                   {t === 'skills' ? 'Skills' : 'Prompts'}
@@ -546,10 +546,10 @@ function WhatIsIt() {
                 </div>
                 <div className="space-y-5">
                   {[
-                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Just markdown files', desc: 'No plugins. Skills are plain .md files in a folder your agent already watches.' },
-                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Reused across every session', desc: 'Write once and it\'s available in every project, every conversation, forever.' },
-                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="3" stroke="currentColor" strokeWidth="1.5"/><circle cx="11" cy="11" r="3" stroke="currentColor" strokeWidth="1.5"/><path d="M7.5 5h1.5M7.5 11h-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Copy across all 11 agents', desc: 'Got a great Claude Code skill? One click copies it to Cursor, Windsurf, Copilot — done.' },
-                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M10 3h3v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>, title: 'Share with your team', desc: 'Commit them to your repo. Every developer gets the same AI behaviour automatically.' },
+                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Just markdown files', desc: 'No plugins. Skills are plain .md files in a folder your agent already watches.' },
+                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Reused across every session', desc: 'Write once and it\'s available in every project, every conversation, forever.' },
+                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="3" stroke="currentColor" strokeWidth="1.5" /><circle cx="11" cy="11" r="3" stroke="currentColor" strokeWidth="1.5" /><path d="M7.5 5h1.5M7.5 11h-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Copy across all 11 agents', desc: 'Got a great Claude Code skill? One click copies it to Cursor, Windsurf, Copilot — done.' },
+                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M10 3h3v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>, title: 'Share with your team', desc: 'Commit them to your repo. Every developer gets the same AI behaviour automatically.' },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -618,7 +618,7 @@ function WhatIsIt() {
                           className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1 flex-shrink-0"
                           style={{ background: 'rgba(255,255,255,0.08)', color: '#94a3b8' }}
                         >
-                          <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M3 3V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4"/></svg>
+                          <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><path d="M3 3V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4" /></svg>
                           Copy
                         </div>
                       </div>
@@ -646,10 +646,10 @@ function WhatIsIt() {
                 </div>
                 <div className="space-y-5">
                   {[
-                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Write once, reuse forever', desc: 'Never write "You are an expert..." from scratch again. Save what works.' },
-                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M10 10l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Search by title, tag or content', desc: 'Tag prompts like "git", "review", "debug" and find any prompt in under a second.' },
-                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.5"/></svg>, title: 'One-click copy to clipboard', desc: 'Hit copy, switch to your AI tool, paste. No hunting through Notion or sticky notes.' },
-                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3.5l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Works with any AI — not just agents', desc: 'ChatGPT, Claude, Gemini, Perplexity — prompts work everywhere you chat with AI.' },
+                    { color: 'rgba(167,139,250,0.15)', textColor: '#a78bfa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Write once, reuse forever', desc: 'Never write "You are an expert..." from scratch again. Save what works.' },
+                    { color: 'rgba(96,165,250,0.15)', textColor: '#60a5fa', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5" /><path d="M10 10l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Search by title, tag or content', desc: 'Tag prompts like "git", "review", "debug" and find any prompt in under a second.' },
+                    { color: 'rgba(52,211,153,0.15)', textColor: '#34d399', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" /><path d="M5 4V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.5" /></svg>, title: 'One-click copy to clipboard', desc: 'Hit copy, switch to your AI tool, paste. No hunting through Notion or sticky notes.' },
+                    { color: 'rgba(251,191,36,0.12)', textColor: '#fbbf24', icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" /><path d="M8 5v3.5l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>, title: 'Works with any AI — not just agents', desc: 'ChatGPT, Claude, Gemini, Perplexity — prompts work everywhere you chat with AI.' },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
@@ -688,7 +688,7 @@ function MacWaitlist() {
   if (submitted) {
     return (
       <span className="inline-flex items-center gap-2 text-emerald-400 text-sm px-7 py-4">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
         You&apos;re on the Mac list!
       </span>
     )
@@ -699,7 +699,7 @@ function MacWaitlist() {
       onSubmit={(e) => {
         e.preventDefault()
         if (!email) return
-        try { localStorage.setItem('mac-waitlist', email) } catch {}
+        try { localStorage.setItem('mac-waitlist', email) } catch { }
         setSubmitted(true)
       }}
       className="flex items-center gap-2"
@@ -731,8 +731,8 @@ function HowItWorks() {
       number: '01',
       icon: (
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M11 3v10M11 13l-3.5-3.5M11 13l3.5-3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M3 18h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          <path d="M11 3v10M11 13l-3.5-3.5M11 13l3.5-3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M3 18h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       ),
       title: 'Download',
@@ -744,9 +744,9 @@ function HowItWorks() {
       number: '02',
       icon: (
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <rect x="3" y="3" width="16" height="13" rx="2" stroke="currentColor" strokeWidth="1.8"/>
-          <path d="M7 19h8M11 16v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          <circle cx="11" cy="9.5" r="2.5" stroke="currentColor" strokeWidth="1.8"/>
+          <rect x="3" y="3" width="16" height="13" rx="2" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M7 19h8M11 16v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="11" cy="9.5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
         </svg>
       ),
       title: 'Open',
@@ -758,10 +758,10 @@ function HowItWorks() {
       number: '03',
       icon: (
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
-          <rect x="12" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
-          <rect x="2" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
-          <rect x="12" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+          <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+          <rect x="12" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+          <rect x="2" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+          <rect x="12" y="12" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
         </svg>
       ),
       title: 'Manage',
@@ -911,11 +911,11 @@ function ComparisonTable() {
           {/* Header */}
           <div className="grid grid-cols-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
             <div className="px-5 py-3 flex items-center gap-2 border-r border-white/[0.04]">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L1 7l6 6M1 7h12" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L1 7l6 6M1 7h12" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               <span className="text-xs font-bold text-red-400/70 uppercase tracking-wider">Without</span>
             </div>
             <div className="px-5 py-3 flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
               <span className="text-xs font-bold text-emerald-400/70 uppercase tracking-wider">With PSM</span>
             </div>
           </div>
@@ -949,18 +949,18 @@ function ComparisonTable() {
 // ── Tech Stack Pills ──────────────────────────────────────────────────────
 function TechStack() {
   const pills = [
-    { label: 'React 18',       color: '#67e8f9', bg: 'rgba(6,182,212,0.1)',   border: 'rgba(6,182,212,0.3)'   },
-    { label: 'TypeScript 5',   color: '#93c5fd', bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.3)'  },
-    { label: 'Electron',       color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.3)'  },
-    { label: 'Next.js 14',     color: '#f4f4f5', bg: 'rgba(255,255,255,0.06)',border: 'rgba(255,255,255,0.12)' },
-    { label: 'Tailwind CSS',   color: '#67e8f9', bg: 'rgba(6,182,212,0.1)',   border: 'rgba(6,182,212,0.3)'   },
-    { label: 'Turborepo',      color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)',  border: 'rgba(236,72,153,0.3)'  },
-    { label: 'Vite',           color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)',  border: 'rgba(139,92,246,0.3)'  },
-    { label: 'Framer Motion',  color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)',  border: 'rgba(236,72,153,0.3)'  },
-    { label: 'MIT License',    color: '#86efac', bg: 'rgba(34,197,94,0.1)',   border: 'rgba(34,197,94,0.3)'   },
-    { label: 'Open Source',    color: '#86efac', bg: 'rgba(34,197,94,0.1)',   border: 'rgba(34,197,94,0.3)'   },
-    { label: 'Monorepo',       color: '#fdba74', bg: 'rgba(249,115,22,0.1)',  border: 'rgba(249,115,22,0.3)'  },
-    { label: 'npm workspaces', color: '#fdba74', bg: 'rgba(249,115,22,0.1)',  border: 'rgba(249,115,22,0.3)'  },
+    { label: 'React 18', color: '#67e8f9', bg: 'rgba(6,182,212,0.1)', border: 'rgba(6,182,212,0.3)' },
+    { label: 'TypeScript 5', color: '#93c5fd', bg: 'rgba(59,130,246,0.1)', border: 'rgba(59,130,246,0.3)' },
+    { label: 'Electron', color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.3)' },
+    { label: 'Next.js 16', color: '#f4f4f5', bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)' },
+    { label: 'Tailwind CSS', color: '#67e8f9', bg: 'rgba(6,182,212,0.1)', border: 'rgba(6,182,212,0.3)' },
+    { label: 'Turborepo', color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)', border: 'rgba(236,72,153,0.3)' },
+    { label: 'Vite', color: '#c4b5fd', bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.3)' },
+    { label: 'Framer Motion', color: '#f9a8d4', bg: 'rgba(236,72,153,0.1)', border: 'rgba(236,72,153,0.3)' },
+    { label: 'MIT License', color: '#86efac', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.3)' },
+    { label: 'Open Source', color: '#86efac', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.3)' },
+    { label: 'Monorepo', color: '#fdba74', bg: 'rgba(249,115,22,0.1)', border: 'rgba(249,115,22,0.3)' },
+    { label: 'npm workspaces', color: '#fdba74', bg: 'rgba(249,115,22,0.1)', border: 'rgba(249,115,22,0.3)' },
   ]
 
   return (
@@ -1088,7 +1088,7 @@ function PlatformCards() {
                   >
                     Download
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 8L8 2M8 2H3M8 2v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 8L8 2M8 2H3M8 2v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </a>
                 ) : (
@@ -1128,14 +1128,14 @@ export default function Home() {
     fetch('/api/downloads')
       .then((r) => r.json())
       .then((d) => setDownloads(d.total))
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   useEffect(() => {
     fetch('/api/stars')
       .then((r) => r.json())
       .then((d) => setStars(d.stars))
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   useEffect(() => {
@@ -1350,8 +1350,8 @@ export default function Home() {
           >
             {[
               { value: 11, suffix: '+', label: 'Supported Agents' },
-              { value: 2,  suffix: '',  label: 'Apps in Monorepo' },
-              { value: 3,  suffix: '',  label: 'Platforms' },
+              { value: 2, suffix: '', label: 'Apps in Monorepo' },
+              { value: 3, suffix: '', label: 'Platforms' },
               { value: -1, suffix: 'TS', label: 'Full TypeScript', isText: true },
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center gap-1">
@@ -1519,7 +1519,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* ── Agents Grid ── */}
       <AgentsGrid />
 
@@ -1596,9 +1596,9 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #1e3a5f 0%, #1a2d4a 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="2.2"/>
-                    <path d="M17.5 17.5L23 23" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                    <circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="2.2" />
+                    <path d="M17.5 17.5L23 23" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+                    <circle cx="12" cy="12" r="3" fill="rgba(255,255,255,0.2)" />
                   </svg>
                 ),
                 title: 'Unified Discovery',
@@ -1608,7 +1608,7 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #1a3d2e 0%, #14532d 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <path d="M16 4L8 16h8l-4 8 12-14h-8L16 4z" fill="white" strokeLinejoin="round"/>
+                    <path d="M16 4L8 16h8l-4 8 12-14h-8L16 4z" fill="white" strokeLinejoin="round" />
                   </svg>
                 ),
                 title: 'Enable / Disable',
@@ -1618,8 +1618,8 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #1e2d4a 0%, #162040 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <path d="M14 4L24 9v10L14 24 4 19V9L14 4z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
-                    <path d="M14 4v20M4 9l10 5 10-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 4L24 9v10L14 24 4 19V9L14 4z" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+                    <path d="M14 4v20M4 9l10 5 10-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 ),
                 title: 'GitHub Install',
@@ -1629,9 +1629,9 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #3d1a0f 0%, #4a1a0a 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <rect x="8" y="10" width="13" height="14" rx="2" stroke="white" strokeWidth="2"/>
-                    <path d="M8 10V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" stroke="white" strokeWidth="2"/>
-                    <path d="M11 16h7M11 20h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <rect x="8" y="10" width="13" height="14" rx="2" stroke="white" strokeWidth="2" />
+                    <path d="M8 10V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" stroke="white" strokeWidth="2" />
+                    <path d="M11 16h7M11 20h5" stroke="white" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 ),
                 title: 'Copy Between Agents',
@@ -1641,9 +1641,9 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #0f2d3d 0%, #0a2433 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <path d="M4 5h3l2.5 12h10L22 9H8.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="11.5" cy="22" r="1.5" fill="white"/>
-                    <circle cx="19.5" cy="22" r="1.5" fill="white"/>
+                    <path d="M4 5h3l2.5 12h10L22 9H8.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="11.5" cy="22" r="1.5" fill="white" />
+                    <circle cx="19.5" cy="22" r="1.5" fill="white" />
                   </svg>
                 ),
                 title: 'Marketplace',
@@ -1653,9 +1653,9 @@ export default function Home() {
                 iconBg: 'linear-gradient(135deg, #2d1a3d 0%, #1f1228 100%)',
                 icon: (
                   <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-                    <circle cx="11" cy="12" r="5" stroke="white" strokeWidth="2"/>
-                    <path d="M15 15l8 8" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M20 18l2 2M18 20l2 2" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    <circle cx="11" cy="12" r="5" stroke="white" strokeWidth="2" />
+                    <path d="M15 15l8 8" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M20 18l2 2M18 20l2 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 ),
                 title: 'GitHub Token',
@@ -1692,6 +1692,131 @@ export default function Home() {
 
       {/* ── Comparison Table ── */}
       <ComparisonTable />
+
+      {/* ── Daily Planner ── */}
+      <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute top-0 right-0 w-[600px] h-[500px] rounded-full blur-[130px]"
+            style={{ background: 'radial-gradient(ellipse, rgba(139,92,246,0.07) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[300px] rounded-full blur-[100px]"
+            style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.05) 0%, transparent 70%)' }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 relative">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left — text */}
+            <ScrollReveal>
+              <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 border border-violet-500/20 mb-5"
+                style={{ background: 'rgba(139,92,246,0.08)' }}>
+                <span className="text-sm">📅</span>
+                <span className="text-[11px] uppercase tracking-[0.18em] text-violet-400 font-semibold">Built-in Feature</span>
+              </span>
+
+              <h2 className="font-heading text-3xl sm:text-4xl tracking-tight text-white mb-5 leading-tight">
+                Your daily planner,<br />
+                <span className="text-shimmer-flow">inside the app</span>
+              </h2>
+
+              <p className="text-sm text-slate-400 leading-relaxed mb-8 max-w-md">
+                Prompt Skill Manager includes a full daily planner — no extra app needed.
+                Plan your day, track habits, review your mood, and stay focused,
+                all in one place alongside your AI workflow.
+              </p>
+
+              {/* Feature pills */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {[
+                  '✅ Top 3 priorities',
+                  '📋 Task checklist',
+                  '⏰ Hour-by-hour schedule',
+                  '💧 Water & sleep tracker',
+                  '⭐ Productivity rating',
+                  '😊 Mood check-in',
+                  '✨ Daily motivational quote',
+                  '💾 Auto-saved locally',
+                ].map(f => (
+                  <span key={f} className="text-xs px-3 py-1.5 rounded-full border border-white/[0.06] text-slate-400"
+                    style={{ background: 'rgba(255,255,255,0.03)' }}>
+                    {f}
+                  </span>
+                ))}
+              </div>
+
+              <p className="text-xs text-slate-600">
+                Data stays 100% on your machine — no cloud, no account required.
+              </p>
+            </ScrollReveal>
+
+            {/* Right — visual card */}
+            <ScrollReveal delay={80}>
+              <div className="rounded-2xl border border-white/[0.06] overflow-hidden"
+                style={{ background: 'rgba(10,10,20,0.8)' }}>
+                {/* Card header */}
+                <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05]"
+                  style={{ background: 'rgba(139,92,246,0.06)' }}>
+                  <span className="text-xs font-semibold text-zinc-300">📅 Daily Planner — Sunday, March 29</span>
+                  <span className="text-[10px] text-emerald-400">✓ Auto-saved</span>
+                </div>
+
+                <div className="p-5 space-y-5">
+                  {/* Priorities */}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-2">••• Top 3 Priorities</p>
+                    <div className="space-y-1.5">
+                      {['Ship the new onboarding flow', 'Review PR #42 before standup', 'Write weekly retrospective'].map((t, i) => (
+                        <div key={i} className="flex items-center gap-2.5">
+                          <span className="text-[10px] text-violet-500 w-3">{i + 1}.</span>
+                          <span className="text-xs text-zinc-300">{t}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Schedule preview */}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-2">⏰ Schedule</p>
+                    <div className="space-y-1">
+                      {[
+                        { time: '9 AM', task: 'Team standup & planning' },
+                        { time: '10 AM', task: 'Deep work — feature build' },
+                        { time: '1 PM', task: 'Code review session' },
+                        { time: '3 PM', task: 'Write docs & close issues' },
+                      ].map(s => (
+                        <div key={s.time} className="flex items-center gap-3">
+                          <span className="text-[10px] text-zinc-600 w-10 tabular-nums flex-shrink-0">{s.time}</span>
+                          <span className="text-xs text-zinc-400 border-b border-zinc-800/60 flex-1 pb-0.5">{s.task}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Day review */}
+                  <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] text-zinc-600">Sleep</span>
+                      <span className="text-xs font-semibold text-violet-400">8h</span>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <span key={i} className="text-sm">{i <= 4 ? '⭐' : '☆'}</span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-0.5 text-base">
+                      <span className="opacity-40">😢</span>
+                      <span className="opacity-40">😐</span>
+                      <span className="opacity-40">🙂</span>
+                      <span className="opacity-40">😄</span>
+                      <span className="scale-125">🤩</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+          </div>
+        </div>
+      </section>
 
       {/* ── Prompt Library ── */}
       <section className="border-t border-white/[0.04] py-28 relative overflow-hidden">
@@ -1766,7 +1891,7 @@ export default function Home() {
                           className="opacity-0 group-hover:opacity-100 transition-opacity text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1 flex-shrink-0"
                           style={{ background: 'rgba(255,255,255,0.06)', color: '#94a3b8' }}
                         >
-                          <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M3 3V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4"/></svg>
+                          <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><path d="M3 3V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.4" /></svg>
                           Copy
                         </div>
                       </div>
@@ -1790,7 +1915,7 @@ export default function Home() {
                 {[
                   {
                     icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                     ),
                     color: 'rgba(139,92,246,0.15)',
                     textColor: '#a78bfa',
@@ -1799,7 +1924,7 @@ export default function Home() {
                   },
                   {
                     icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 5h12M2 8h8M2 11h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 5h12M2 8h8M2 11h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                     ),
                     color: 'rgba(96,165,250,0.15)',
                     textColor: '#60a5fa',
@@ -1808,7 +1933,7 @@ export default function Home() {
                   },
                   {
                     icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M10 10l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5" /><path d="M10 10l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                     ),
                     color: 'rgba(52,211,153,0.15)',
                     textColor: '#34d399',
@@ -1817,7 +1942,7 @@ export default function Home() {
                   },
                   {
                     icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.5"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" /><path d="M5 4V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1" stroke="currentColor" strokeWidth="1.5" /></svg>
                     ),
                     color: 'rgba(251,191,36,0.12)',
                     textColor: '#fbbf24',
@@ -1941,7 +2066,7 @@ export default function Home() {
               aria-label="Previous"
             >
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M6.5 2L3.5 5L6.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6.5 2L3.5 5L6.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
 
@@ -1967,7 +2092,7 @@ export default function Home() {
               aria-label="Next"
             >
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M3.5 2L6.5 5L3.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M3.5 2L6.5 5L3.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
