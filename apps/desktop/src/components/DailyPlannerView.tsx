@@ -98,7 +98,7 @@ function getDaysRemaining(d: Date) {
 }
 
 // ── Shared input class ────────────────────────────────────────────────────────
-const INPUT = 'w-full bg-transparent border-b border-zinc-800 focus:border-zinc-600 text-zinc-200 text-sm placeholder-zinc-700 focus:outline-none py-1 resize-none leading-snug'
+const INPUT = 'w-full bg-transparent border-b border-zinc-700 focus:border-violet-500 text-zinc-200 text-sm placeholder-zinc-600 focus:outline-none py-1 resize-none leading-snug'
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function DailyPlannerView() {
@@ -248,7 +248,7 @@ export default function DailyPlannerView() {
               <div className="space-y-1">
                 {TIME_SLOTS.map(time => (
                   <div key={time} className="flex items-center gap-3">
-                    <span className="text-[11px] text-zinc-600 w-10 flex-shrink-0 tabular-nums">{time}</span>
+                    <span className="text-[11px] text-zinc-400 w-10 flex-shrink-0 tabular-nums font-medium">{time}</span>
                     <textarea
                       value={data.schedule[time] ?? ''}
                       rows={1}
@@ -304,7 +304,7 @@ export default function DailyPlannerView() {
                         className={`w-7 h-7 rounded-full text-xs font-medium transition-all ${
                           data.dayReview.hoursSlept === n
                             ? 'bg-violet-600 text-white scale-110 shadow-md shadow-violet-900/40'
-                            : 'border border-zinc-700 text-zinc-500 hover:border-violet-600 hover:text-violet-400'
+                            : 'border border-zinc-700 text-zinc-300 hover:border-violet-600 hover:text-violet-400'
                         }`}
                       >{n}</button>
                     ))}
@@ -325,7 +325,7 @@ export default function DailyPlannerView() {
                         className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs transition-all ${
                           data.dayReview.healthyDiet.includes(m.key)
                             ? 'bg-violet-600 text-white scale-105 shadow-md shadow-violet-900/40'
-                            : 'border border-zinc-700 text-zinc-500 hover:border-violet-600 hover:text-violet-400'
+                            : 'border border-zinc-700 text-zinc-300 hover:border-violet-600 hover:text-violet-400'
                         }`}
                       >
                         <span>{m.icon}</span>{m.short}
@@ -375,7 +375,7 @@ export default function DailyPlannerView() {
                         className={`text-xl transition-all ${
                           data.dayReview.mood === i
                             ? 'scale-125 drop-shadow-[0_0_6px_rgba(167,139,250,0.8)]'
-                            : 'opacity-40 hover:opacity-80'
+                            : 'opacity-70 hover:opacity-100'
                         }`}
                         title={['Sad','Neutral','Good','Happy','Excellent'][i]}
                       >{emoji}</button>
@@ -389,8 +389,8 @@ export default function DailyPlannerView() {
 
           {/* ── Footer ─────────────────────────────────────────────────────── */}
           <div className="flex justify-center pb-4">
-            <span className="text-xs text-zinc-700">
-              Created with ❤️ by <span className="text-zinc-500 font-medium">Anubhav</span>
+            <span className="text-xs text-zinc-500">
+              Created with ❤️ by <span className="text-zinc-300 font-medium">Anubhav</span>
             </span>
           </div>
 
@@ -404,7 +404,7 @@ export default function DailyPlannerView() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-xl bg-zinc-900/50 border border-zinc-800/60 p-4">
-      <h2 className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mb-3">{title}</h2>
+      <h2 className="text-[11px] font-semibold text-zinc-300 uppercase tracking-wider mb-3">{title}</h2>
       {children}
     </div>
   )
@@ -413,7 +413,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function ReviewRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-[11px] text-zinc-600 uppercase tracking-wide">{label}</span>
+      <span className="text-[11px] text-zinc-400 uppercase tracking-wide font-medium">{label}</span>
       {children}
     </div>
   )

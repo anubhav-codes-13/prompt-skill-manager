@@ -131,6 +131,7 @@ const testimonials = [
     source: 'Product Hunt',
     sourceUrl: 'https://www.producthunt.com/products/ai-skills-manager',
     name: 'Alex Rivers',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
     gradientFrom: '#7c3aed',
     gradientTo: '#6366f1',
   },
@@ -139,6 +140,7 @@ const testimonials = [
     source: 'Hacker News',
     sourceUrl: 'https://news.ycombinator.com',
     name: 'Sarah Chen',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     gradientFrom: '#0ea5e9',
     gradientTo: '#6366f1',
   },
@@ -147,6 +149,7 @@ const testimonials = [
     source: 'Hacker News',
     sourceUrl: 'https://news.ycombinator.com',
     name: 'Marcus Thorne',
+    avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
     gradientFrom: '#059669',
     gradientTo: '#0ea5e9',
   },
@@ -155,6 +158,7 @@ const testimonials = [
     source: 'Hacker News',
     sourceUrl: 'https://news.ycombinator.com',
     name: 'Elena Garcia',
+    avatar: 'https://randomuser.me/api/portraits/women/26.jpg',
     gradientFrom: '#d97706',
     gradientTo: '#dc2626',
   },
@@ -163,6 +167,7 @@ const testimonials = [
     source: 'Product Hunt',
     sourceUrl: 'https://www.producthunt.com/products/ai-skills-manager',
     name: 'James Wilson',
+    avatar: 'https://randomuser.me/api/portraits/men/41.jpg',
     gradientFrom: '#7c3aed',
     gradientTo: '#ec4899',
   },
@@ -171,6 +176,7 @@ const testimonials = [
     source: 'Hacker News',
     sourceUrl: 'https://news.ycombinator.com',
     name: 'Lila Okafor',
+    avatar: 'https://randomuser.me/api/portraits/women/89.jpg',
     gradientFrom: '#0891b2',
     gradientTo: '#059669',
   },
@@ -1472,44 +1478,44 @@ export default function Home() {
       {/* ── What is it? ── */}
       <WhatIsIt />
 
-      {/* ── Agent Marquee ── */}
-      <section
-        className="border-t border-white/[0.04] py-16 overflow-hidden relative"
-        style={{ background: 'rgba(139,92,246,0.015)' }}
-      >
-        <ScrollReveal>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-violet-400/50 font-semibold mb-10 text-center">
-            Works with {agents.length} coding agents
-          </p>
-        </ScrollReveal>
-        <div className="relative">
-          {/* Left fade mask */}
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32"
-            style={{ background: 'linear-gradient(to right, #020209, transparent)' }}
-          />
-          {/* Right fade mask */}
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32"
-            style={{ background: 'linear-gradient(to left, #020209, transparent)' }}
-          />
-          <div className="flex">
-            <div className="animate-marquee flex shrink-0 gap-6">
-              {[...agents, ...agents].map((agent, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center gap-2.5 px-5 shrink-0 group"
-                >
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center border border-violet-500/10 group-hover:border-violet-500/40 transition-all duration-300 group-hover:scale-125 group-hover:rotate-6"
-                    style={{ background: 'rgba(139,92,246,0.06)', transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s' }}
-                  >
-                    <AgentIcon agent={agent} size={26} />
-                  </div>
-                  <span className="text-xs text-slate-500 whitespace-nowrap group-hover:text-slate-300 transition-colors duration-200">{agent}</span>
-                </div>
-              ))}
+      {/* ── Agent Grid ── */}
+      <section className="border-t border-white/[0.04] py-20">
+        <div className="container px-6 max-w-5xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-violet-400/60 font-semibold mb-3">
+                Compatibility
+              </span>
+              <h2 className="text-2xl font-bold text-white">
+                Works with {agents.length} coding agents
+              </h2>
+              <p className="text-sm text-slate-500 mt-2">One app. Every agent. Zero friction.</p>
             </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+            {agents.map((agent, i) => (
+              <ScrollReveal key={agent} delay={i * 40}>
+                <div
+                  className="group relative flex flex-col items-center gap-3 p-4 rounded-2xl border border-white/[0.05] hover:border-violet-500/30 transition-all duration-300 cursor-default"
+                  style={{ background: 'rgba(255,255,255,0.02)' }}
+                >
+                  {/* glow on hover */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.12), transparent 70%)' }}
+                  />
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
+                    style={{ background: 'rgba(139,92,246,0.08)', boxShadow: '0 0 0 1px rgba(139,92,246,0.12)' }}
+                  >
+                    <AgentIcon agent={agent} size={24} />
+                  </div>
+                  <span className="text-[11px] text-slate-500 group-hover:text-slate-300 transition-colors duration-200 text-center leading-tight font-medium">
+                    {agent}
+                  </span>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
@@ -1902,12 +1908,12 @@ export default function Home() {
                     </p>
                     {/* Author */}
                     <div className="flex items-center justify-center gap-3">
-                      <div
-                        className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${t.gradientFrom}, ${t.gradientTo})` }}
-                      >
-                        {t.name.split(' ').map(n => n[0]).join('')}
-                      </div>
+                      <img
+                        src={t.avatar}
+                        alt={t.name}
+                        className="w-10 h-10 rounded-full flex-shrink-0 object-cover ring-2"
+                        style={{ ringColor: t.gradientFrom, boxShadow: `0 0 0 2px ${t.gradientFrom}55` }}
+                      />
                       <div className="text-left">
                         <p className="text-sm font-semibold text-white">{t.name}</p>
                         <a
@@ -1970,17 +1976,50 @@ export default function Home() {
 
       {/* ── FAQ ── */}
       <section className="border-t border-white/[0.04] py-24 relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 50% 80% at 20% 50%, rgba(139,92,246,0.04) 0%, transparent 70%)' }}
-        />
-        <div className="max-w-2xl mx-auto px-6 relative">
+        {/* Background glow blobs */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[120px]"
+            style={{ background: 'radial-gradient(ellipse, rgba(139,92,246,0.08) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full blur-[100px]"
+            style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)' }} />
+        </div>
+
+        <div className="max-w-3xl mx-auto px-6 relative">
+          {/* ── Header — all centered, one block ── */}
           <ScrollReveal>
-            <h2 className="font-heading text-[1.75rem] sm:text-[2.25rem] text-center mb-14 tracking-tight">
-              FAQ
-            </h2>
+            <div className="text-center mb-14">
+              {/* Glowing badge */}
+              <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 border border-violet-500/20"
+                style={{ background: 'rgba(139,92,246,0.08)' }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+                <span className="text-[11px] uppercase tracking-[0.2em] text-violet-400 font-semibold">FAQ</span>
+              </div>
+
+              {/* Big headline */}
+              <h2 className="font-heading text-4xl sm:text-5xl tracking-tight leading-tight mb-4">
+                <span className="text-white">Everything you </span>
+                <span className="relative inline-block">
+                  <span className="text-shimmer-flow">need to know</span>
+                </span>
+              </h2>
+
+              <p className="text-sm text-slate-500 leading-relaxed max-w-md mx-auto">
+                Can't find what you're looking for?{' '}
+                <a
+                  href="https://github.com/zunalabs/prompt-skill-manager/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-violet-400 hover:text-violet-300 underline underline-offset-2 transition-colors"
+                >
+                  Open an issue
+                </a>{' '}
+                and we'll get back to you.
+              </p>
+            </div>
           </ScrollReveal>
-          <ScrollReveal delay={80}>
+
+          {/* ── Accordion ── */}
+          <ScrollReveal delay={60}>
             <Faq />
           </ScrollReveal>
         </div>
